@@ -94,7 +94,9 @@ export default function ClientDashboard() {
           <MessageCircle className="w-6 h-6 text-blue-600" />
           <span className="mt-2 text-sm font-medium text-gray-700">Messages</span>
         </button>
-        <button className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition">
+        <button 
+        onClick={() => navigate('/documents')}
+        className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition">
           <FileText className="w-6 h-6 text-blue-600" />
           <span className="mt-2 text-sm font-medium text-gray-700">Documents</span>
         </button>

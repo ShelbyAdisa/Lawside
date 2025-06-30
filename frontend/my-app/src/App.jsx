@@ -12,6 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LawyerAvailabilityForm from './pages/LawyerAvailabilityForm';
 import BookAppointment from './pages/BookAppointment';
 import Lawyers from "./pages/Lawyers";
+import Documents from "./pages/Documents";
 import './App.css';
 
 function App() {
@@ -86,6 +87,17 @@ function App() {
               <>
                 <Navbar />
                 <Lawyers />
+                <Footer />
+              </>
+            }
+          />
+
+          <Route
+            path="/documents"
+            element={
+              <>
+                <Navbar />
+                <Documents />
                 <Footer />
               </>
             }
