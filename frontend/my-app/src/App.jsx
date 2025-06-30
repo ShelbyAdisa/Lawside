@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import LawyerAvailabilityForm from './pages/LawyerAvailabilityForm';
 import BookAppointment from './pages/BookAppointment';
+import Lawyers from "./pages/Lawyers";
 import './App.css';
 
 function App() {
@@ -74,6 +75,17 @@ function App() {
               <>
                 <Navbar />
                 <BookAppointment />
+                <Footer />
+              </>
+            }
+          />
+
+          <Route
+            path="/lawyers"
+            element={
+              <>
+                <Navbar />
+                <Lawyers />
                 <Footer />
               </>
             }
