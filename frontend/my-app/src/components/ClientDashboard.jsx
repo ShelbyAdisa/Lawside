@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { CalendarDays, MessageCircle, UserCircle, FileText, BookOpen, CalendarCheck } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
+// Sample data for appointments
 const appointments = [
   {
     id: 1,
@@ -41,13 +43,15 @@ function AnimatedCounter({ value, className }) {
 }
 
 export default function ClientDashboard() {
+  const navigate = useNavigate();
+
   return (
     <div className="space-y-8">
       {/* Welcome section */}
       <div className="bg-gradient-to-r from-blue-100 to-blue-200 p-6 rounded-xl shadow flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-blue-800">Welcome Back, Melba!</h2>
-          <p className="text-gray-700 mt-1">Here’s how you're engaging with your legal team and services.</p>
+          <p className="text-gray-700 mt-1">Here’s how you’re working with your legal team and managing client services.</p>
         </div>
         <UserCircle className="w-12 h-12 text-blue-700" />
       </div>
@@ -79,7 +83,10 @@ export default function ClientDashboard() {
 
       {/* Quick actions */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <button className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition">
+        <button
+          onClick={() => navigate('/book')}
+          className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition"
+        >
           <CalendarDays className="w-6 h-6 text-blue-600" />
           <span className="mt-2 text-sm font-medium text-gray-700">Book Appointment</span>
         </button>

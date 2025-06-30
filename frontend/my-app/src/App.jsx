@@ -10,6 +10,7 @@ import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import LawyerAvailabilityForm from './pages/LawyerAvailabilityForm';
+import BookAppointment from './pages/BookAppointment';
 import './App.css';
 
 function App() {
@@ -63,6 +64,17 @@ function App() {
               <>
                 <Navbar />
                 <Signup />
+              </>
+            }
+          />
+
+          <Route
+            path="/book"
+            element={
+              <>
+                <Navbar />
+                <BookAppointment />
+                <Footer />
               </>
             }
           />
