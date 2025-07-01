@@ -41,14 +41,15 @@
 import React from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import ClientDashboard from "../components/ClientDashboard";
+import LawyerDashboard from "../components/LawyerDashboard";
 
 const Dashboard = () => {
   return (
     <DashboardLayout>
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-        Welcome, <span className="text-blue-600">demo-client@example.com</span>
+        Welcome, <span className="text-blue-600">demo-lawyer@example.com</span>
       </h2>
-      <ClientDashboard />
+      <LawyerDashboard />
     </DashboardLayout>
   );
 };
