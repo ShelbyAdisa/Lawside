@@ -48,7 +48,7 @@ const practices = [
 function BookAppointmentContent() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [range, setRange] = useState(0);
+  const [range, setRange] = useState(5000);
   const [currency, setCurrency] = useState("KES");
 
   React.useEffect(() => {
@@ -72,7 +72,7 @@ function BookAppointmentContent() {
                 <img src={p.img} alt={p.name} className="w-full h-96 object-cover" />
                 <div className="p-8 flex flex-col justify-between">
                   <div>
-                    <h2 classNam    e="text-2xl font-bold text-blue-700 mb-4">{p.name}</h2>
+                    <h2 className="text-2xl font-bold text-blue-700 mb-4">{p.name}</h2>
                     <p className="text-gray-700 leading-relaxed">{p.description}</p>
                   </div>
                   <button
@@ -95,8 +95,8 @@ function BookAppointmentContent() {
             <label className="block mb-4 text-gray-700">Select your preferred hourly rate:</label>
             <input
               type="range"
-              min="0"
-              max="250"
+              min="5000"
+              max="50000"
               value={range}
               onChange={(e) => setRange(e.target.value)}
               className="w-full mb-4"

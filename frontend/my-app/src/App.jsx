@@ -13,6 +13,7 @@ import LawyerAvailabilityForm from './pages/LawyerAvailabilityForm';
 import BookAppointment from './pages/BookAppointment';
 import Lawyers from "./pages/Lawyers";
 import Documents from "./pages/Documents";
+import Chat from "./pages/Chat";
 import './App.css';
 
 function App() {
@@ -99,6 +100,16 @@ function App() {
                 <Navbar />
                 <Documents />
                 <Footer />
+              </>
+            }
+          />
+
+          <Route
+            path="/chat"
+            element={
+              <>
+                <Navbar />
+                <Chat />
               </>
             }
           />

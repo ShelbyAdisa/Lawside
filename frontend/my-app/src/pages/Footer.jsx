@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-bold text-blue-400 mb-4">LegalConsult</h3>
+            <h3 className="text-2xl font-bold text-blue-400 mb-4">Lawside</h3>
             <p className="text-gray-300 mb-4">
               Connecting clients with experienced lawyers for professional legal consultations. 
               Get expert legal advice when you need it most.
@@ -88,7 +88,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
           <p className="text-gray-300">
-            © 2025 LegalConsult. All rights reserved.
+            © 2025 Lawside. All rights reserved.
           </p>
         </div>
       </div>
