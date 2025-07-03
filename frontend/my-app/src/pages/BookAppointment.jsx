@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -50,8 +50,11 @@ function BookAppointmentContent() {
   const [step, setStep] = useState(1);
   const [range, setRange] = useState(5000);
   const [currency, setCurrency] = useState("KES");
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  React.useEffect(() => {
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
     const userLang = navigator.language;
     if (userLang.includes("en-US")) setCurrency("KES");
     else if (userLang.includes("en-GB")) setCurrency("GBP");
@@ -59,35 +62,103 @@ function BookAppointmentContent() {
     else setCurrency("USD");
   }, []);
 
+  const scrollToIndex = (index) => {
+    if (scrollRef.current) {
+      const width = scrollRef.current.offsetWidth;
+      scrollRef.current.scrollTo({
+        left: index * width,
+        behavior: "smooth",
+      });
+      setCurrentIndex(index);
+    }
+  };
+
+  const scrollLeft = () => {
+    if (currentIndex > 0) scrollToIndex(currentIndex - 1);
+  };
+
+  const scrollRight = () => {
+    if (currentIndex < practices.length - 1) scrollToIndex(currentIndex + 1);
+  };
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const scrollLeft = scrollRef.current.scrollLeft;
+      const width = scrollRef.current.offsetWidth;
+      const index = Math.round(scrollLeft / width);
+      setCurrentIndex(index);
+    }
+  };
+
   return (
-    <div className="w-full min-h-screen bg-blue-50 text-gray-800">
+    <div className="w-full min-h-screen bg-blue-50 text-gray-800 relative overflow-hidden">
       {step === 1 && (
-        <div className="overflow-x-auto snap-x snap-mandatory flex h-screen">
-          {practices.map((p, index) => (
-            <div
-              key={index}
-              className="w-full min-w-full h-full flex items-center justify-center snap-center p-8"
+        <div className="relative h-screen">
+          {/* Scroll Buttons */}
+          {currentIndex > 0 && (
+            <button
+              onClick={scrollLeft}
+              className="absolute top-1/2 left-2 z-10 transform -translate-y-1/2 bg-blue-600 text-white p-3 rounded-full shadow-md hover:bg-blue-700 transition-all"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl bg-white shadow-xl rounded-2xl overflow-hidden">
-                <img src={p.img} alt={p.name} className="w-full h-96 object-cover" />
-                <div className="p-8 flex flex-col justify-between">
-                  <div>
-                    <h2 className="text-2xl font-bold text-blue-700 mb-4">{p.name}</h2>
-                    <p className="text-gray-700 leading-relaxed">{p.description}</p>
+              &#8592;
+            </button>
+          )}
+          {currentIndex < practices.length - 1 && (
+            <button
+              onClick={scrollRight}
+              className="absolute top-1/2 right-2 z-10 transform -translate-y-1/2 bg-blue-600 text-white p-3 rounded-full shadow-md hover:bg-blue-700 transition-all"
+            >
+              &#8594;
+            </button>
+          )}
+
+          {/* Scrollable Cards */}
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="overflow-x-auto snap-x snap-mandatory flex h-full scroll-smooth"
+          >
+            {practices.map((p, index) => (
+              <div
+                key={index}
+                className="w-full min-w-full h-full flex items-center justify-center snap-center p-8"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl bg-white shadow-xl rounded-2xl overflow-hidden">
+                  <img src={p.img} alt={p.name} className="w-full h-96 object-cover" />
+                  <div className="p-8 flex flex-col justify-between">
+                    <div>
+                      <h2 className="text-2xl font-bold text-blue-700 mb-4">{p.name}</h2>
+                      <p className="text-gray-700 leading-relaxed">{p.description}</p>
+                    </div>
+                    <button
+                      onClick={() => setStep(2)}
+                      className="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg"
+                    >
+                      Find a Lawyer
+                    </button>
                   </div>
-                  <button
-                    onClick={() => setStep(2)}
-                    className="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg"
-                  >
-                    Find a Lawyer
-                  </button>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* Dot Indicators */}
+          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-3">
+            {practices.map((_, index) => (
+              <div
+                key={index}
+                className={`transition-all duration-300 rounded-full ${
+                  index === currentIndex
+                    ? "w-4 h-4 bg-blue-600 scale-110"
+                    : "w-3 h-3 bg-gray-400"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       )}
 
+      {/* Step 2 */}
       {step === 2 && (
         <div className="flex flex-col items-center justify-center h-screen p-6">
           <div className="max-w-xl w-full bg-white rounded-2xl shadow-lg p-8">

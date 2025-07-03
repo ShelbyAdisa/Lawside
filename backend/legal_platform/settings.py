@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+  #  'cloudinary',  # For image uploads
+  #  'cloudinary_storage',  # For cloudinary storage backend
+
+  
     
     # Third party apps
     'rest_framework',
@@ -51,16 +55,30 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'rest_framework_simplejwt', 
     'django_filters',
+    'django_extensions',
     # 'djoser',
     
     # Local apps
     'accounts',
-    # 'lawyers',
+     'lawyers',
     'appointments',
-    # 'practice_areas',
+     'practice_areas',
     # 'payments',
     'api', 
 ]
+# Cloudinary configuration
+INSTALLED_APPS += [
+    'cloudinary',
+    'cloudinary_storage',
+]
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -215,6 +233,7 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': True,
+    "AUTH_HEADER_TYPES": ("JWT",),
 }
 
 # Email settings (for development)

@@ -11,7 +11,7 @@ urlpatterns = [
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
 
-    # ✅ Add user details endpoint with correct route
+    
     path('auth/user/', UserDetailsView.as_view(), name='user-detail'),
 
     # API routes

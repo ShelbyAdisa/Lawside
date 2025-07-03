@@ -1,27 +1,27 @@
 import { createContext, useState, useEffect } from 'react';
+import axiosInstance from '../api/axiosInstance';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem('accessToken'));
+  const [token, setToken] = useState(localStorage.getItem('authToken'));
 
-  const login = (accessToken) => {
-    setToken(accessToken);
-    localStorage.setItem('accessToken', accessToken);
+  const login = (newToken) => {
+    setToken(newToken);
+    axiosInstance.defaults.headers.common['Authorization'] = `Token ${newToken}`;
   };
 
   const logout = () => {
     setToken(null);
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('authToken');
+    delete axiosInstance.defaults.headers.common['Authorization'];
   };
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('accessToken');
-    if (storedToken) {
-      setToken(storedToken);
+    if (token) {
+      axiosInstance.defaults.headers.common['Authorization'] = `Token ${token}`;
     }
-  }, []);
+  }, [token]);
 
   return (
     <AuthContext.Provider value={{ token, login, logout }}>

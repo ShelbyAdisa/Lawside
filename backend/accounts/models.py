@@ -23,6 +23,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     user_type = models.CharField(max_length=10, choices=USER_TYPES, default="client")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    first_name = models.CharField(max_length=150, blank=True)
+    last_name = models.CharField(max_length=150, blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

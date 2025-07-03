@@ -49,7 +49,7 @@ const Dashboard = () => {
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">
         Welcome, <span className="text-blue-600">demo-lawyer@example.com</span>
       </h2>
-      <LawyerDashboard />
+      <ClientDashboard />
     </DashboardLayout>
   );
 };
