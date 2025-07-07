@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useLocation } from "react-router-dom";
 import {
   Search,
   Filter,
@@ -10,14 +13,152 @@ import {
   DollarSign,
 } from "lucide-react";
 
+function Modal({ lawyer, onClose }) {
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [message, setMessage] = useState("");
+
+  if (!lawyer) return null;
+
+  const handlePayment = async () => {
+  if (!selectedDate) {
+    alert("Please select a date and time1.");
+    console.log("User ID:", user?.user_id);
+    console.log("Lawyer ID:", lawyer.user_id);
+    return;
+  }
+
+  try {
+    const response = await axios.post("http://127.0.0.1:8000/api/payments/create-checkout-session/", {
+      lawyer_id: lawyer.user_id,
+      client_id: user?.user_id, 
+      date: selectedDate.toISOString(),
+      message,
+      amount: parseFloat(lawyer.consultation_fee) * 127,
+    });
+
+    window.location.href = response.data.checkout_url;
+  } catch (error) {
+    console.error("Payment error:", error);
+    alert("Unable to proceed to payment.");
+  }
+};
+
+
+  const formatDate = (dateString) => {
+    // Add validation to ensure we have a valid date string
+    if (!dateString) return "N/A";
+    
+    const date = new Date(dateString);
+    // Check if the date is valid
+    if (isNaN(date.getTime())) return "Invalid Date";
+    
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString(undefined, options);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-3xl overflow-y-auto max-h-[90vh]">
+        {/* Header */}
+        <div className="flex justify-between items-center border-b pb-4 mb-6">
+          <h2 className="text-3xl font-semibold text-gray-800">{lawyer.name}</h2>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-800 text-lg font-bold"
+          >
+            ×
+          </button>
+        </div>
+
+        {/* Profile and Booking */}
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Lawyer Info */}
+          <div className="space-y-3 text-sm text-gray-700">
+            <p><strong>Biography:</strong> {lawyer.biography}</p>
+            <p><strong>Practice Areas:</strong> {lawyer.practice_areas.join(", ")}</p>
+            <p><strong>Languages Spoken:</strong> {lawyer.languages_spoken || "N/A"}</p>
+            <p><strong>Years of Experience:</strong> {lawyer.years_of_experience}</p>
+            <p><strong>Education:</strong> {lawyer.education}</p>
+            {lawyer.certifications && (
+              <p><strong>Certifications:</strong> {lawyer.certifications}</p>
+            )}
+            <p><strong>Bar Admission Date:</strong> {formatDate(lawyer.bar_admission_date)}</p>
+            <p><strong>License Number:</strong> {lawyer.license_number || "N/A"}</p>
+            <p><strong>Office Address:</strong> {lawyer.office_address}</p>
+
+            <p className="text-gray-700 font-medium">
+              Rating: {parseFloat(lawyer.average_rating).toFixed(1)} / 5.0
+              <span className="text-sm text-gray-500 ml-2">
+                ({lawyer.total_reviews} reviews)
+              </span>
+            </p>
+
+            <p className="font-semibold text-green-700 text-lg mt-2">
+              Consultation Fee: KES {(parseFloat(lawyer.consultation_fee) * 127).toLocaleString()}
+            </p>
+          </div>
+
+          {/* Booking Form */}
+          <div>
+            <label className="block text-sm font-medium mb-1 text-gray-700">
+              Select Appointment Date & Time
+            </label>
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={30}
+              dateFormat="MMMM d, yyyy h:mm aa"
+              className="w-full p-2 border border-gray-300 rounded mb-4"
+              placeholderText="Choose a time"
+            />
+
+            <label className="block text-sm font-medium mb-1 text-gray-700">
+              Message for Lawyer
+            </label>
+            <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              rows={4}
+              placeholder="Optional message..."
+              className="w-full p-2 border border-gray-300 rounded resize-none"
+            />
+
+            <div className="mt-6 flex justify-end">
+              <button
+                onClick={handlePayment}
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-medium"
+              >
+                Proceed to Payment
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Lawyers() {
+  const location = useLocation();
+  const { selectedPractice, selectedBudget, currency } = location.state || {};
   const [lawyers, setLawyers] = useState([]);
   const [filteredLawyers, setFilteredLawyers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
-  const [selectedPracticeArea, setSelectedPracticeArea] = useState("");
-  const [priceRange, setPriceRange] = useState("");
+  const [selectedPracticeArea, setSelectedPracticeArea] = useState(() => selectedPractice?.name || "");
+  const [priceRange, setPriceRange] = useState(() => {
+    if (!selectedBudget) return "";
+    if (selectedBudget <= 10000) return "0-10000";
+    if (selectedBudget <= 20000) return "10000-20000";
+    return "20000+";
+  });
+  const [selectedLawyer, setSelectedLawyer] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  
 
   useEffect(() => {
     axios
@@ -44,7 +185,7 @@ export default function Lawyers() {
       selectedPracticeArea === "" ||
       lawyer.practice_areas.some((area) => area === selectedPracticeArea);
 
-    const fee = parseFloat(lawyer.consultation_fee) * 127;
+    const fee = Math.ceil(parseFloat(lawyer.consultation_fee) * 127);
     const matchesPriceRange =
       priceRange === "" ||
       (priceRange === "0-10000" && fee <= 10000) ||
@@ -91,16 +232,23 @@ export default function Lawyers() {
     }
   };
 
-  const handleViewProfile = (lawyerId) => {
-    console.log("View profile of:", lawyerId);
-    // You can navigate to a detailed profile page here
+  const handleViewProfile = (lawyer) => {
+    setSelectedLawyer(lawyer);
+    setIsModalOpen(true);
   };
 
-  const handleBookAppointment = (lawyerId) => {
-    console.log("Book appointment with:", lawyerId);
-    // You can navigate to booking flow here
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedLawyer(null);
   };
 
+  const handleBooking = async () => {
+  if (!selectedDate) {
+    alert("Please select a date and time.");
+    return;
+  }
+
+};
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
       <div className="bg-white shadow-sm border-b border-blue-100">
@@ -159,7 +307,7 @@ export default function Lawyers() {
             </div>
 
             <div className="flex gap-2">
-              {["name", "rating", "price"].map((field) => (
+              {["name", "rating", "fee"].map((field) => (
                 <button
                   key={field}
                   onClick={() => toggleSort(field)}
@@ -231,7 +379,7 @@ export default function Lawyers() {
                         </span>
                         <span className="flex items-center gap-1 text-gray-500">
                           <MapPin className="h-4 w-4" />
-                          {lawyer.location || "N/A"}
+                          {lawyer.office_address || "N/A"}
                         </span>
                       </div>
                       <p className="text-gray-600 text-sm mb-2 line-clamp-3">
@@ -240,14 +388,14 @@ export default function Lawyers() {
                       <div className="flex justify-between items-center text-sm">
                         <span className="text-blue-800 font-bold">{priceRange}</span>
                         <span className="text-gray-500">
-                          {lawyer.years_experience || 0} years experience
+                          {lawyer.years_of_experience || 0} years experience
                         </span>
                       </div>
                     </div>
                   </div>
                   <div className="mt-6 pt-4 border-t border-gray-100">
                     <button
-                      onClick={() => handleViewProfile(lawyer.id)}
+                      onClick={() => handleViewProfile(lawyer)}
                       className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition"
                     >
                       View Profile & Book Consultation
@@ -267,6 +415,10 @@ export default function Lawyers() {
           </div>
         )}
       </div>
+
+      {isModalOpen && (
+        <Modal lawyer={selectedLawyer} onClose={closeModal} />
+      )}
     </div>
   );
 }

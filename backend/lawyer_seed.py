@@ -42,7 +42,8 @@ for i in range(NUM_LAWYERS):
         email=email,
         password=PASSWORD,
         first_name=first_name,
-        last_name=last_name
+        last_name=last_name,
+        user_type="lawyer"
     )
 
     # Create lawyer profile

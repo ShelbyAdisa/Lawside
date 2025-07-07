@@ -1,46 +1,46 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 
 const practices = [
   { 
     name: "Family Law", 
-    img: "/images/family.jpg", 
+    img: "https://thumbs.dreamstime.com/b/family-law-books-judges-gavel-desk-library-education-books-concept-88312956.jpg?w=768", 
     description: "Comprehensive legal services for divorce, child custody, adoption, prenuptial agreements, and domestic relations matters with compassionate guidance." 
   },
   { 
     name: "Criminal Law", 
-    img: "/images/criminal.jpg", 
+    img: "https://thumbs.dreamstime.com/b/gavel-name-plate-engraving-criminal-law-63046488.jpg?w=768", 
     description: "Aggressive defense representation for criminal charges, DUI cases, white-collar crimes, and appeals with experienced trial advocacy." 
   },
   { 
     name: "Employment Law", 
-    img: "/images/employment.jpg", 
+    img: "https://t4.ftcdn.net/jpg/01/99/88/95/240_F_199889529_PmlcupXxdB4SuGFBTQYH6lbaWxNQK3ma.jpg", 
     description: "Workplace discrimination claims, wrongful termination, labor disputes, employment contracts, and HR compliance for employers and employees." 
   },
   { 
     name: "Personal Injury", 
-    img: "/images/personal-injury.jpg", 
+    img: "https://media.istockphoto.com/id/1070418448/photo/personal-injury-law-book-and-a-black-desk.jpg?s=612x612&w=0&k=20&c=7JJ2mMV3MT4gz6onur4R6ELvsVYTcULc3Q9oIb0f7WM=", 
     description: "Maximum compensation for accident victims, medical malpractice, slip and fall cases, and wrongful death claims with no fee unless we win." 
   },
   { 
     name: "Real Estate", 
-    img: "/images/real-estate.jpg", 
+    img: "https://kamoinglaw.co.ke/wp-content/uploads/elementor/thumbs/Real-estate-law-kamoing-law-q1o7k0givj2hfpibp8rjfjwdawxvqxbo7nf9o257zk.jpg", 
     description: "Property transactions, real estate disputes, zoning issues, landlord-tenant matters, and title examinations handled with precision and care." 
   },
   { 
     name: "Business Law", 
-    img: "/images/business.jpg", 
+    img: "https://law.ukzn.ac.za/wp-content/uploads/2022/08/LLM-Business-Law.jpg", 
     description: "Business formation, mergers and acquisitions, contract negotiations, compliance matters, and corporate governance for companies of all sizes." 
   },
   { 
     name: "Immigration", 
-    img: "/images/immigration.jpg", 
+    img: "https://hkmlegal.co.ke/wp-content/uploads/2021/03/Immigration-Law-1.jpg?id=11100", 
     description: "Visa applications, citizenship proceedings, deportation defense, family reunification, and employment-based immigration solutions." 
   },
   { 
     name: "Estate Planning", 
-    img: "/images/estate-planning.jpg", 
+    img: "https://www.gudemanlaw.com/wp-content/uploads/2023/12/Estate-planning-lawyer-Troy-MI.jpg", 
     description: "Wills, trusts, probate administration, estate tax planning, and asset protection strategies to secure your family's future." 
   },
 ];
@@ -176,7 +176,15 @@ function BookAppointmentContent() {
               {currency} {parseInt(range).toLocaleString()}/hr
             </div>
             <button
-              onClick={() => navigate("/lawyers")}
+              onClick={() =>
+                navigate("/lawyers", {
+                  state: {
+                    selectedPractice: practices[currentIndex],
+                    selectedBudget: range,
+                    currency,
+                  },
+                })
+              }
               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg"
             >
               Continue to Lawyers

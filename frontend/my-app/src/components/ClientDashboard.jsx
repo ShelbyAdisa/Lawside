@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { CalendarDays, MessageCircle, UserCircle, FileText, BookOpen, CalendarCheck } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from "../context/AuthContext";
 
 // Sample data for appointments
 const appointments = [
   {
     id: 1,
-    lawyer: "John Doe",
+    lawyer: "John Johnson",
     date: "2025-07-01",
     time: "10:00 AM",
     status: "Confirmed",
@@ -44,13 +45,14 @@ function AnimatedCounter({ value, className }) {
 
 export default function ClientDashboard() {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   return (
     <div className="space-y-8">
       {/* Welcome section */}
       <div className="bg-gradient-to-r from-blue-100 to-blue-200 p-6 rounded-xl shadow flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-blue-800">Welcome Back, Melba!</h2>
+          <h2 className="text-2xl font-bold text-blue-800">Welcome Back, {user?.first_name}!</h2>
           <p className="text-gray-700 mt-1">Here’s how you’re working with your legal team and managing client services.</p>
         </div>
         <UserCircle className="w-12 h-12 text-blue-700" />
@@ -94,7 +96,7 @@ export default function ClientDashboard() {
         onClick={() => navigate('/chat')}
         className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition">
           <MessageCircle className="w-6 h-6 text-blue-600" />
-          <span className="mt-2 text-sm font-medium text-gray-700">Messages</span>
+          <span className="mt-2 text-sm font-medium text-gray-700">Alerts</span>
         </button>
         <button 
         onClick={() => navigate('/documents')}
@@ -102,7 +104,9 @@ export default function ClientDashboard() {
           <FileText className="w-6 h-6 text-blue-600" />
           <span className="mt-2 text-sm font-medium text-gray-700">Documents</span>
         </button>
-        <button className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition">
+        <button 
+        onClick={() => navigate('/resources')}
+        className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition">
           <BookOpen className="w-6 h-6 text-blue-600" />
           <span className="mt-2 text-sm font-medium text-gray-700">Legal Resources</span>
         </button>

@@ -15,6 +15,7 @@ import Lawyers from "./pages/Lawyers";
 import Documents from "./pages/Documents";
 import Chat from "./pages/Chat";
 import './App.css';
+import LegalResources from './pages/LegalResources';
 
 function App() {
   return (
@@ -110,6 +111,17 @@ function App() {
               <>
                 <Navbar />
                 <Chat />
+              </>
+            }
+          />
+
+          <Route
+            path="/resources"
+            element={
+              <>
+                <Navbar />
+                <LegalResources/>
+                <Footer />
               </>
             }
           />

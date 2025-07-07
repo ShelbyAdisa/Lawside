@@ -60,10 +60,10 @@ INSTALLED_APPS = [
     
     # Local apps
     'accounts',
-     'lawyers',
+    'lawyers',
     'appointments',
-     'practice_areas',
-    # 'payments',
+    'practice_areas',
+    'payments',
     'api', 
 ]
 # Cloudinary configuration
@@ -207,9 +207,6 @@ DJOSER = {
 
 # Allauth Configuration
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None  
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'  
 ACCOUNT_LOGIN_METHODS = {'email'}  
 ACCOUNT_SIGNUP_FIELDS = {'email*', 'password1*', 'password2*', 'user_type*'}
 ACCOUNT_EMAIL_VERIFICATION = 'optional'  
@@ -217,9 +214,10 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional'
 # LOGOUT_REDIRECT_URL = '/'
 REST_AUTH_SERIALIZERS = {
     'LOGIN_SERIALIZER': 'dj_rest_auth.serializers.LoginSerializer',
-    'USER_DETAILS_SERIALIZER': 'dj_rest_auth.serializers.UserDetailsSerializer',
+   #'USER_DETAILS_SERIALIZER': 'dj_rest_auth.serializers.UserDetailsSerializer',
     'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
-    'USER_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer',
+    #'USER_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer',
+    'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer', 
 }
 # JWT Configuration
 REST_USE_JWT = False

@@ -5,10 +5,21 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('authToken'));
+  const [user, setUser] = useState(null);
+  
 
-  const login = (newToken) => {
+  const login = async (newToken) => {
     setToken(newToken);
+    localStorage.setItem('authToken', newToken);
     axiosInstance.defaults.headers.common['Authorization'] = `Token ${newToken}`;
+
+    try {
+    const response = await axiosInstance.get('/dj-rest-auth/user/'); 
+    console.log("✅ User data fetched:", response.data);
+    setUser(response.data);
+  } catch (error) {
+    console.error("Failed to fetch user data:", error);
+  }
   };
 
   const logout = () => {
@@ -24,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   return (
-    <AuthContext.Provider value={{ token, login, logout }}>
+    <AuthContext.Provider value={{ token, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
