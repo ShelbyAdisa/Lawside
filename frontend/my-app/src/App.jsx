@@ -17,6 +17,7 @@ import Chat from "./pages/Chat";
 import './App.css';
 import LegalResources from './pages/LegalResources';
 import { useState, useEffect } from 'react';
+import TrackFinances from './pages/TrackFinances';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -87,6 +88,17 @@ function App() {
               <>
                 <Navbar />
                 <BookAppointment />
+                <Footer />
+              </>
+            }
+          />
+
+          <Route
+            path="/finances"
+            element={
+              <>
+                <Navbar />
+                <TrackFinances />
                 <Footer />
               </>
             }
