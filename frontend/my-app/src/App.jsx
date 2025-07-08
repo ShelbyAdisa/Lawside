@@ -16,8 +16,17 @@ import Documents from "./pages/Documents";
 import Chat from "./pages/Chat";
 import './App.css';
 import LegalResources from './pages/LegalResources';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+  const storedUser = localStorage.getItem("userData");
+  if (storedUser) {
+    setUser(JSON.parse(storedUser));
+  }
+}, []);
+
   return (
     <Router>
       <div className="min-h-screen bg-gray-50 flex flex-col">

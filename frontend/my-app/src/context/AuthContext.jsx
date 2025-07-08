@@ -16,7 +16,14 @@ export const AuthProvider = ({ children }) => {
     try {
     const response = await axiosInstance.get('/dj-rest-auth/user/'); 
     console.log("✅ User data fetched:", response.data);
-    setUser(response.data);
+    const modifiedUser = {
+      ...response.data,
+      email: response.data.email?.toLowerCase(),
+      role: response.data.user_type,
+    };
+    localStorage.setItem("userData", JSON.stringify(modifiedUser));
+    console.log("✅ Modified user data:", modifiedUser);
+    setUser(modifiedUser);
   } catch (error) {
     console.error("Failed to fetch user data:", error);
   }

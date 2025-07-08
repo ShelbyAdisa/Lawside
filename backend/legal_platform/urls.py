@@ -12,7 +12,7 @@ urlpatterns = [
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
 
     
-    path('auth/user/', UserDetailsView.as_view(), name='user-detail'),
+    #path('auth/user/', UserDetailsView.as_view(), name='user-detail'),
 
     # API routes
     path('api/', include('api.urls')),

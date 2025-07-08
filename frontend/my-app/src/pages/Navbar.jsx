@@ -2,12 +2,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { UserContext } from '../context/UserContext';
+import React from 'react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { token, logout } = useContext(AuthContext);
-  const { user } = useContext(UserContext);
+  const { user } = useContext(AuthContext);
 
   const handleSignIn = () => navigate('/login');
   const handleSignUp = () => navigate('/signup');
@@ -31,7 +32,7 @@ const Navbar = () => {
                   <Link to="/lawyer-availability" className="text-sm font-medium hover:text-blue-600">My Availability</Link>
                 )}
                 <span className="text-sm text-gray-700">
-                  Welcome, <b>{user?.email}</b>
+                  Welcome, <b>{user?.first_name} {user?.last_name}</b>
                 </span>
               </>
             )}

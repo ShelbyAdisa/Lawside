@@ -44,6 +44,7 @@ for i in range(NUM_LAWYERS):
         first_name=first_name,
         last_name=last_name,
         user_type="lawyer"
+        # is_lawyer=True,
     )
 
     # Create lawyer profile

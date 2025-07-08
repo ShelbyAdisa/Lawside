@@ -1,6 +1,4 @@
-// src/context/UserContext.jsx
 import { createContext, useEffect, useState } from "react";
-import axiosInstance from "../api/axiosInstance";
 
 export const UserContext = createContext();
 
@@ -9,28 +7,20 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    const storedUser = localStorage.getItem("userData");
 
-      axiosInstance.get("/dj-rest-auth/user/")
-        .then((res) => {
-          console.log("✅ User loaded:", res.data);
-          setUser(res.data);
-        })
-        .catch((err) => {
-          console.error("❌ Error fetching user:", err);
-          setUser(null);
-        })
-        .finally(() => setLoading(false));
+    if (storedUser) {
+      console.log("✅ Loaded user from localStorage");
+      setUser(JSON.parse(storedUser));
     } else {
-      console.log("🚫 No token found");
-      setLoading(false);
+      console.log("🚫 No userData in localStorage");
     }
+
+    setLoading(false);
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, loading, setUser }}>
+    <UserContext.Provider value={{ user, setUser, loading }}>
       {children}
     </UserContext.Provider>
   );

@@ -21,9 +21,8 @@ function Modal({ lawyer, onClose }) {
 
   const handlePayment = async () => {
   if (!selectedDate) {
-    alert("Please select a date and time1.");
+    alert("Please select a date and time.");
     console.log("User ID:", user?.user_id);
-    console.log("Lawyer ID:", lawyer.user_id);
     return;
   }
 

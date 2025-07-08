@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from accounts.models import CustomUser
 
 class Appointment(models.Model):
@@ -15,7 +16,17 @@ class Appointment(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     notes = models.TextField(blank=True)
 
+    # Stripe-related fields
+    fee = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    is_paid = models.BooleanField(default=False)
+    paid_at = models.DateTimeField(null=True, blank=True)
+    stripe_session_id = models.CharField(max_length=255, null=True, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.client.email} → {self.lawyer.email} on {self.date} at {self.time}"
+
+    def start_legal_process(self):
+        # Placeholder for post-payment actions
+        pass
