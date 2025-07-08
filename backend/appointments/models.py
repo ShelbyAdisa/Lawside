@@ -9,8 +9,8 @@ class Appointment(models.Model):
         ('cancelled', 'Cancelled'),
     ]
 
-    client = models.ForeignKey(CustomUser, related_name='appointments', on_delete=models.CASCADE)
-    lawyer = models.ForeignKey(CustomUser, related_name='lawyer_appointments', on_delete=models.CASCADE)
+    client = models.ForeignKey(CustomUser, related_name='appointments', on_delete=models.CASCADE, null=True)
+    lawyer = models.ForeignKey(CustomUser, related_name='lawyer_appointments', on_delete=models.CASCADE, null=True)
     date = models.DateField()
     time = models.TimeField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
