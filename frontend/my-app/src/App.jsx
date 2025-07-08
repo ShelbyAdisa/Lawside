@@ -21,6 +21,7 @@ import AppointmentsPage from './pages/Appointments';
 import PaymentForm from './components/PaymentForm';
 import PaymentSuccess from './components/PaymentSuccess';
 import History from './pages/History';
+import PaymentPage from './components/PaymentPage';
 import './App.css';
 
 function App() {
@@ -55,7 +56,7 @@ function App() {
             <Route path="/finances" element={<TrackFinances />} />
             <Route path="/appointments" element={<AppointmentsPage />} />
             <Route path="/history" element={<History />} />
-
+            <Route path="/payment" element={<PaymentPage />} />
             {/* Payment Routes */}
             <Route path="/checkout" element={<PaymentForm />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />

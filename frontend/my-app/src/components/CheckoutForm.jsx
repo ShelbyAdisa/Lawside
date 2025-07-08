@@ -6,7 +6,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { createPaymentIntent } from '../services/paymentService';
 
-const CheckoutForm = ({ amount, onPaymentSuccess, onPaymentError }) => {
+const CheckoutForm = ({ amount, user, onPaymentSuccess, onPaymentError }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -15,15 +15,13 @@ const CheckoutForm = ({ amount, onPaymentSuccess, onPaymentError }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!stripe || !elements) {
-      return;
-    }
+    if (!stripe || !elements) return;
 
     setIsProcessing(true);
     setErrorMessage('');
 
     try {
-      // Step 1: Create payment intent on your Django backend
+      // Step 1: Create payment intent from backend
       const { client_secret } = await createPaymentIntent(amount);
 
       // Step 2: Confirm payment with Stripe
@@ -31,23 +29,21 @@ const CheckoutForm = ({ amount, onPaymentSuccess, onPaymentError }) => {
         payment_method: {
           card: elements.getElement(CardElement),
           billing_details: {
-            name: 'Customer Name', // You can make this dynamic
-            email: 'customer@example.com', // You can make this dynamic
+            name: user?.name || 'Anonymous',
+            email: user?.email || 'noemail@example.com',
           },
         },
       });
 
       if (error) {
         setErrorMessage(error.message);
-        onPaymentError(error);
-      } else {
-        // Payment succeeded
-        console.log('Payment succeeded:', paymentIntent);
-        onPaymentSuccess(paymentIntent);
+        if (onPaymentError) onPaymentError(error);
+      } else if (paymentIntent.status === 'succeeded') {
+        if (onPaymentSuccess) onPaymentSuccess(paymentIntent);
       }
     } catch (error) {
       setErrorMessage(error.message || 'An unexpected error occurred');
-      onPaymentError(error);
+      if (onPaymentError) onPaymentError(error);
     } finally {
       setIsProcessing(false);
     }
@@ -58,9 +54,7 @@ const CheckoutForm = ({ amount, onPaymentSuccess, onPaymentError }) => {
       base: {
         fontSize: '16px',
         color: '#424770',
-        '::placeholder': {
-          color: '#aab7c4',
-        },
+        '::placeholder': { color: '#aab7c4' },
       },
       invalid: {
         color: '#9e2146',
@@ -71,26 +65,24 @@ const CheckoutForm = ({ amount, onPaymentSuccess, onPaymentError }) => {
   return (
     <form onSubmit={handleSubmit} className="checkout-form">
       <div className="form-group">
-        <label htmlFor="card-element">
+        <label htmlFor="card-element" className="block mb-2 text-sm font-medium">
           Credit or debit card
         </label>
         <CardElement
           id="card-element"
           options={cardElementOptions}
-          className="card-element"
+          className="card-element border p-3 rounded"
         />
       </div>
-      
+
       {errorMessage && (
-        <div className="error-message" role="alert">
-          {errorMessage}
-        </div>
+        <div className="text-red-600 text-sm mt-2">{errorMessage}</div>
       )}
-      
+
       <button
         type="submit"
         disabled={!stripe || isProcessing}
-        className="pay-button"
+        className={`mt-4 px-4 py-2 rounded text-white ${isProcessing ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'}`}
       >
         {isProcessing ? 'Processing...' : `Pay $${(amount / 100).toFixed(2)}`}
       </button>

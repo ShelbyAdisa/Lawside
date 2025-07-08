@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000/api'; // Your Django backend URL
+const API_BASE_URL = 'http://127.0.0.1:8000/'; // Your Django backend URL
 
 // Create payment intent
 export const createPaymentIntent = async (amount, currency = 'usd') => {
