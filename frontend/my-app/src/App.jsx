@@ -16,7 +16,6 @@ import Lawyers from './pages/Lawyers';
 import Documents from './pages/Documents';
 import Chat from './pages/Chat';
 import LegalResources from './pages/LegalResources';
-import { useState, useEffect } from 'react';
 import TrackFinances from './pages/TrackFinances';
 import AppointmentsPage from './pages/Appointments';
 import PaymentForm from './components/PaymentForm';
