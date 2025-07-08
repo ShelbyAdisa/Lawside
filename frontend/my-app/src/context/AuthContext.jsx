@@ -2,11 +2,27 @@ import { createContext, useState, useEffect } from 'react';
 import axiosInstance from '../api/axiosInstance';
 
 export const AuthContext = createContext();
-
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('authToken'));
   const [user, setUser] = useState(null);
   
+  useEffect(() => {
+  const savedToken = localStorage.getItem("authToken");
+  const savedUser = localStorage.getItem("userData");
+
+  if (savedToken) {
+    setToken(savedToken);
+    axiosInstance.defaults.headers.common["Authorization"] = `Token ${savedToken}`;
+  }
+
+  if (savedUser) {
+    try {
+      setUser(JSON.parse(savedUser));
+    } catch (err) {
+      console.error("Error parsing userData:", err);
+    }
+  }
+}, []);
 
   const login = async (newToken) => {
     setToken(newToken);
@@ -31,6 +47,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setToken(null);
+    setUser(null);
     localStorage.removeItem('authToken');
     delete axiosInstance.defaults.headers.common['Authorization'];
   };

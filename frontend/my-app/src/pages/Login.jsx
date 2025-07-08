@@ -32,7 +32,7 @@ export default function Login() {
       axiosInstance.defaults.headers.common['Authorization'] = `Token ${token}`;
       login(token);
       alert('Login successful!');
-      navigate('/dashboard');
+      navigate('/');
     } else {
       alert('Login failed: Token not received.');
     }

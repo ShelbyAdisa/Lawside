@@ -16,13 +16,13 @@ const Dashboard = () => {
     );
   }
 
+  // Check email-based role override
+  const lawyerEmails = ["john.johnson@example.com", "donna.garrett@example.com"];
+  const isLawyer = lawyerEmails.includes(user.email);
+
   return (
     <DashboardLayout>
-      {user.role === "lawyer" ? (
-        <LawyerDashboard />
-      ) : (
-        <ClientDashboard />
-      )}
+      {isLawyer ? <LawyerDashboard /> : <ClientDashboard />}
     </DashboardLayout>
   );
 };
