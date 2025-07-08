@@ -20,6 +20,7 @@ import TrackFinances from './pages/TrackFinances';
 import AppointmentsPage from './pages/Appointments';
 import PaymentForm from './components/PaymentForm';
 import PaymentSuccess from './components/PaymentSuccess';
+import History from './pages/History';
 import './App.css';
 
 function App() {
@@ -51,9 +52,12 @@ function App() {
             <Route path="/resources" element={<LegalResources />} />
             <Route path="/documents" element={<Documents />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/finances" element={<TrackFinances />} />
+            <Route path="/appointments" element={<AppointmentsPage />} />
+            <Route path="/history" element={<History />} />
 
             {/* Payment Routes */}
-            <Route path="/payment" element={<PaymentForm />} />
+            <Route path="/checkout" element={<PaymentForm />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
 
             {/* Protected Routes */}

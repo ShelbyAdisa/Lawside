@@ -117,7 +117,7 @@ function LawyerDashboardContent() {
           <span className="mt-2 text-sm font-medium text-gray-700">Appointments</span>
         </button>
         <button
-          onClick={() => navigate("/documents")}
+          onClick={() => navigate("/history")}
           className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition"
         >
           <FileText className="w-6 h-6 text-purple-600" />
