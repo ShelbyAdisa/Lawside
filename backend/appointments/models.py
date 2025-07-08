@@ -11,8 +11,8 @@ class Appointment(models.Model):
         ('refunded', 'Refunded'),
     ]
     
-    client = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments')
-    lawyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lawyer_appointments')
+    #client = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments')
+    #lawyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lawyer_appointments')
     appointment_date = models.DateTimeField()
     fee = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField(blank=True)
