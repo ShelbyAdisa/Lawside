@@ -18,6 +18,7 @@ import './App.css';
 import LegalResources from './pages/LegalResources';
 import { useState, useEffect } from 'react';
 import TrackFinances from './pages/TrackFinances';
+import AppointmentsPage from './pages/Appointments';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -99,6 +100,17 @@ function App() {
               <>
                 <Navbar />
                 <TrackFinances />
+                <Footer />
+              </>
+            }
+          />
+
+          <Route
+            path="/appointments"
+            element={
+              <>
+                <Navbar />
+                <AppointmentsPage />
                 <Footer />
               </>
             }
