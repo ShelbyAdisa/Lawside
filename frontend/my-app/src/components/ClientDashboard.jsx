@@ -84,19 +84,13 @@ export default function ClientDashboard() {
       </div>
 
       {/* Quick actions */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <button
           onClick={() => navigate('/book')}
           className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition"
         >
           <CalendarDays className="w-6 h-6 text-blue-600" />
           <span className="mt-2 text-sm font-medium text-gray-700">Book Appointment</span>
-        </button>
-        <button 
-        onClick={() => navigate('/chat')}
-        className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition">
-          <MessageCircle className="w-6 h-6 text-blue-600" />
-          <span className="mt-2 text-sm font-medium text-gray-700">Alerts</span>
         </button>
         <button 
         onClick={() => navigate('/documents')}
