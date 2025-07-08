@@ -1,54 +1,54 @@
 import { useState } from "react";
 import { CalendarDays, User, Clock, BadgeDollarSign } from "lucide-react";
 
-// const initialAppointments = [
-//   {
-//     id: 1,
-//     client: "Jane Smith",
-//     date: "2025-07-02",
-//     time: "3:00 PM",
-//     status: "Confirmed",
-//     fee: "$200",
-//     description: "Contract review and consultation",
-//   },
-//   {
-//     id: 2,
-//     client: "Alex Johnson",
-//     date: "2025-07-06",
-//     time: "11:00 AM",
-//     status: "Pending",
-//     fee: "$150",
-//     description: "Business formation advice",
-//   },
-//   {
-//     id: 3,
-//     client: "Linda Carter",
-//     date: "2025-07-08",
-//     time: "2:00 PM",
-//     status: "Payment Pending",
-//     fee: "$175",
-//     description: "Real estate transaction guidance",
-//   },
-// ];
+const initialAppointments = [
+  {
+    id: 1,
+    client: "Jane Smith",
+    date: "2025-07-02",
+    time: "3:00 PM",
+    status: "Confirmed",
+    fee: "$200",
+    description: "Contract review and consultation",
+  },
+  {
+    id: 2,
+    client: "Alex Johnson",
+    date: "2025-07-06",
+    time: "11:00 AM",
+    status: "Pending",
+    fee: "$150",
+    description: "Business formation advice",
+  },
+  {
+    id: 3,
+    client: "Linda Carter",
+    date: "2025-07-08",
+    time: "2:00 PM",
+    status: "Payment Pending",
+    fee: "$175",
+    description: "Real estate transaction guidance",
+  },
+];
 
-// export default function AppointmentsPage() {
-//   const [appointments] = useState(initialAppointments);
-//   const [search, setSearch] = useState("");
-//   const [statusFilter, setStatusFilter] = useState("all");
+export default function AppointmentsPage() {
+  const [appointments] = useState(initialAppointments);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
-//   const filteredAppointments = appointments.filter((appt) => {
-//     return (
-//       (search === "" ||
-//         appt.client.toLowerCase().includes(search.toLowerCase()) ||
-//         appt.status.toLowerCase().includes(search.toLowerCase()) ||
-//         appt.description.toLowerCase().includes(search.toLowerCase())) &&
-//       (statusFilter === "all" || appt.status === statusFilter)
-//     );
-//   });
+  const filteredAppointments = appointments.filter((appt) => {
+    return (
+      (search === "" ||
+        appt.client.toLowerCase().includes(search.toLowerCase()) ||
+        appt.status.toLowerCase().includes(search.toLowerCase()) ||
+        appt.description.toLowerCase().includes(search.toLowerCase())) &&
+      (statusFilter === "all" || appt.status === statusFilter)
+    );
+  });
 
-//   return (
-//     <div className="p-6 space-y-6">
-//       <h1 className="text-2xl font-bold">Appointments</h1>
+  return (
+    <div className="p-6 space-y-6">
+      <h1 className="text-2xl font-bold">Appointments</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <input
