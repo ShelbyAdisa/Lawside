@@ -40,6 +40,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("userData", JSON.stringify(modifiedUser));
     console.log("✅ Modified user data:", modifiedUser);
     setUser(modifiedUser);
+    localStorage.setItem("userData", JSON.stringify(modifiedUser));
+    window.location.reload();
   } catch (error) {
     console.error("Failed to fetch user data:", error);
   }
