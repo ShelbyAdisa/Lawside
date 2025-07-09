@@ -32,7 +32,7 @@ def create_checkout_session(request):
                 },
             ],
             mode='payment',
-            success_url=data.get('success_url', 'http://localhost:8000/success'),
+            success_url=data.get('success_url', 'http://localhost:5173/payment-success'),
             cancel_url=data.get('cancel_url', 'http://localhost:8000/cancel'),
         )
         print(f"Using Stripe key: {stripe.api_key}")

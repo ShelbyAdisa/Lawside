@@ -64,6 +64,7 @@ function App() {
             <Route path="/appointments" element={<AppointmentsPage />} />
             <Route path="/history" element={<History />} />
             <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
 
             {/* Payment Routes */}
             <Route
