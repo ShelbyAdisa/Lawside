@@ -81,9 +81,16 @@ const Navbar = () => {
                 <div className="text-sm px-4 py-2 text-gray-700">
                   Welcome, <b>{user?.email}</b>
                 </div>
-                <button onClick={logout} className="block w-full text-left text-red-600 text-sm px-4 py-2 hover:bg-red-50">
-                  Logout
-                </button>
+                <button
+
+  onClick={() => {
+    logout();
+    navigate('/');
+  }}
+  className="block w-full text-left text-red-600 text-sm px-4 py-2 hover:bg-red-50"
+>
+  Logout
+</button>
               </>
             )}
 
