@@ -238,9 +238,9 @@ SIMPLE_JWT = {
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Stripe Configuration
-STRIPE_PUBLISHABLE_KEY = config('pk_test_51RiX3qBHnuH9MYZ3No97OApwAUet1MWXQMZgAlNJu64k2bf0fCKXOk8IaxGR8JQ4MZi8pvr3CjkN8YAwPP0VUtSn002LapSlr4', default='')
-STRIPE_SECRET_KEY = config('sk_test_51RiX3qBHnuH9MYZ3MNIhCY73FyjUE0OsyLIamROVBxjRvF6kudAFNS4QmvtE0H3bnZ8h5Sj0a3uIea9sPUqOQakG00BR174rYa', default='')
+STRIPE_PUBLISHABLE_KEY = "pk_test_51RiX3qBHnuH9MYZ3No97OApwAUet1MWXQMZgAlNJu64k2bf0fCKXOk8IaxGR8JQ4MZi8pvr3CjkNUtSn002LapSlr4"
 STRIPE_WEBHOOK_SECRET = config('whsec_4ce4f413a6a33384c951d69f8690658059708e41f4267da41fd6b2259a47dd4e', default='')
+STRIPE_SECRET_KEY = "sk_test_51RiX3qBHnuH9MYZ3MNIhCY73FyjUE0OsyLIamROVBxjRvF6kudAFNS4QmvtE0H3bnZ8h5Sj0a3uIea9sPUqOQakG00BR174rYa"
 
 # Frontend domain for Stripe redirects
 FRONTEND_DOMAIN = config('FRONTEND_DOMAIN', default='http://localhost:3000')

@@ -1,0 +1,59 @@
+INFO 2025-07-09 05:22:06,328 _util 10944 14584 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 05:22:08,520 _util 10944 14584 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=401
+INFO 2025-07-09 05:22:08,522 _util 10944 14584 error_code=None error_message="You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/." error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-07-09 05:27:43,229 _util 10944 15884 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 05:27:44,803 _util 10944 15884 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=401
+INFO 2025-07-09 05:27:44,805 _util 10944 15884 error_code=None error_message="You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/." error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-07-09 05:51:16,710 _util 10944 15500 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 05:51:17,850 _util 10944 15500 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=401
+INFO 2025-07-09 05:51:17,852 _util 10944 15500 error_code=None error_message="You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/." error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-07-09 05:53:09,877 _util 10944 5708 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 05:53:11,236 _util 10944 5708 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=401
+INFO 2025-07-09 05:53:11,237 _util 10944 5708 error_code=None error_message="You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/." error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-07-09 06:04:01,018 _util 10944 4504 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 06:04:02,970 _util 10944 4504 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=401
+INFO 2025-07-09 06:04:02,971 _util 10944 4504 error_code=None error_message="You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/." error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-07-09 06:14:08,100 _util 10944 17812 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 06:14:09,900 _util 10944 17812 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=401
+INFO 2025-07-09 06:14:09,901 _util 10944 17812 error_code=None error_message="You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/." error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-07-09 06:25:52,543 _util 10944 20172 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 06:25:54,111 _util 10944 20172 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=401
+INFO 2025-07-09 06:25:54,113 _util 10944 20172 error_code=None error_message="You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/." error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-07-09 06:26:01,931 _util 10944 20172 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 06:26:02,086 _util 10944 20172 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=401
+INFO 2025-07-09 06:26:02,087 _util 10944 20172 error_code=None error_message="You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/." error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-07-09 06:31:00,471 _util 10944 19952 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 06:31:02,236 _util 10944 19952 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=401
+INFO 2025-07-09 06:31:02,238 _util 10944 19952 error_code=None error_message="You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/." error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-07-09 06:38:28,879 _util 3832 8340 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 06:38:31,774 _util 3832 8340 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=401
+INFO 2025-07-09 06:38:31,776 _util 3832 8340 error_code=None error_message="You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/." error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-07-09 06:49:27,364 _util 9296 18744 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 06:49:28,738 _util 9296 18744 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=401
+INFO 2025-07-09 06:49:28,740 _util 9296 18744 error_code=None error_message="You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/." error_param=None error_type=invalid_request_error message='Stripe v1 API error received'
+INFO 2025-07-09 06:56:07,967 _util 13704 17672 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 06:56:09,602 _util 13704 17672 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 06:56:17,661 _util 13704 17672 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 06:56:18,280 _util 13704 17672 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 07:03:09,534 _util 13476 6812 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 07:03:11,775 _util 13476 6812 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 07:03:41,659 _util 13476 11632 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 07:03:44,037 _util 13476 11632 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 07:03:50,475 _util 13476 13260 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 07:03:52,939 _util 13476 13260 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 07:05:15,022 _util 13476 18708 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 07:05:17,011 _util 13476 18708 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 07:06:27,874 _util 13476 19336 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 07:06:29,816 _util 13476 19336 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 07:06:50,133 _util 13476 13528 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 07:06:52,081 _util 13476 13528 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 07:08:41,574 _util 13476 17860 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 07:08:44,174 _util 13476 17860 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 07:09:31,919 _util 13476 19568 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 07:09:34,140 _util 13476 19568 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 07:09:43,154 _util 13476 20284 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 07:09:45,038 _util 13476 20284 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 07:09:51,577 _util 13476 11704 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 07:09:53,800 _util 13476 11704 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 07:10:14,758 _util 13476 7016 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 07:10:16,841 _util 13476 7016 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200

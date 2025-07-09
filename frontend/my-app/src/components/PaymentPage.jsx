@@ -1,22 +1,48 @@
 import React, { useState } from 'react';
-import { Elements } from '@stripe/react-stripe-js';
 import stripePromise from '../utils/stripeConfig';
-import CheckoutForm from './CheckoutForm';
 import PaymentSuccess from './PaymentSuccess';
 
 const PaymentPage = () => {
-  const [paymentStatus, setPaymentStatus] = useState('initial'); // 'initial', 'success', 'error'
+  const [paymentStatus, setPaymentStatus] = useState('initial'); // 'initial', 'success', 'error', 'loading'
   const [paymentDetails, setPaymentDetails] = useState(null);
   const amount = 2000; // $20.00 in cents
 
-  const handlePaymentSuccess = (paymentIntent) => {
-    setPaymentStatus('success');
-    setPaymentDetails(paymentIntent);
-  };
-
-  const handlePaymentError = (error) => {
-    setPaymentStatus('error');
-    console.error('Payment failed:', error);
+  const handleCheckoutRedirect = async () => {
+    setPaymentStatus('loading');
+    
+    try {
+      // Create checkout session on your backend
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: amount,
+          // Add other necessary data
+        }),
+      });
+      
+      const session = await response.json();
+      
+      if (session.error) {
+        throw new Error(session.error);
+      }
+      
+      // Redirect to Stripe Checkout
+      const stripe = await stripePromise;
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+      setPaymentStatus('error');
+    }
   };
 
   const resetPayment = () => {
@@ -41,13 +67,22 @@ const PaymentPage = () => {
           <p>Amount: ${(amount / 100).toFixed(2)}</p>
         </div>
         
-        <Elements stripe={stripePromise}>
-          <CheckoutForm
-            amount={amount}
-            onPaymentSuccess={handlePaymentSuccess}
-            onPaymentError={handlePaymentError}
-          />
-        </Elements>
+        <div className="checkout-section">
+          <button 
+            onClick={handleCheckoutRedirect}
+            disabled={paymentStatus === 'loading'}
+            className="checkout-button"
+          >
+            {paymentStatus === 'loading' ? 'Processing...' : 'Proceed to Checkout'}
+          </button>
+          
+          {paymentStatus === 'error' && (
+            <div className="error-message">
+              <p>Payment failed. Please try again.</p>
+              <button onClick={resetPayment}>Try Again</button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

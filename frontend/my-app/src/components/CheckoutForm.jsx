@@ -1,92 +1,108 @@
-import React, { useState } from 'react';
-import {
-  CardElement,
-  useStripe,
-  useElements
-} from '@stripe/react-stripe-js';
-import { createPaymentIntent } from '../services/paymentService';
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useStripe } from "@stripe/react-stripe-js";
 
-const CheckoutForm = ({ amount, user, onPaymentSuccess, onPaymentError }) => {
+const CheckoutForm = ({ amount, appointmentId, user }) => {
   const stripe = useStripe();
-  const elements = useElements();
+  const params = useParams();
   const [isProcessing, setIsProcessing] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  // Get appointmentId from URL params if not provided as prop
+  const currentAppointmentId = appointmentId || params.appointmentId || 1;
+  const paymentAmount = amount || 2000; // Default to $20.00
 
-    if (!stripe || !elements) return;
+  const handleCheckout = async () => {
+    if (!stripe) {
+      setErrorMessage("Stripe has not loaded yet. Please try again.");
+      return;
+    }
 
     setIsProcessing(true);
-    setErrorMessage('');
+    setErrorMessage("");
 
     try {
-      // Step 1: Create payment intent from backend
-      const { client_secret } = await createPaymentIntent(amount);
-
-      // Step 2: Confirm payment with Stripe
-      const { error, paymentIntent } = await stripe.confirmCardPayment(client_secret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-          billing_details: {
-            name: user?.name || 'Anonymous',
-            email: user?.email || 'noemail@example.com',
-          },
+      const token = localStorage.getItem("authToken");
+      
+      // Create checkout session
+      const response = await fetch("http://localhost:8000/api/payments/create-checkout-session/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify({ 
+          amount: paymentAmount, 
+          appointment_id: currentAppointmentId 
+        }),
       });
 
-      if (error) {
-        setErrorMessage(error.message);
-        if (onPaymentError) onPaymentError(error);
-      } else if (paymentIntent.status === 'succeeded') {
-        if (onPaymentSuccess) onPaymentSuccess(paymentIntent);
+      if (!response.ok) {
+
+        console.log(JSON.stringify({ 
+     amount: paymentAmount, 
+     appointment_id: currentAppointmentId 
+   }));
+
+        throw new Error(`HTTP error! status: ${response.status}`);
+
+        
       }
-    } catch (error) {
-      setErrorMessage(error.message || 'An unexpected error occurred');
-      if (onPaymentError) onPaymentError(error);
+
+
+      const data = await response.json();
+      if (!data.checkout_url) throw new Error("No checkout URL received from server.");
+        window.location.href = data.checkout_url;
+
+    } catch (err) {
+      console.error("Checkout error:", err);
+      //setErrorMessage("Failed to start checkout. Please try again.");
     } finally {
       setIsProcessing(false);
     }
   };
 
-  const cardElementOptions = {
-    style: {
-      base: {
-        fontSize: '16px',
-        color: '#424770',
-        '::placeholder': { color: '#aab7c4' },
-      },
-      invalid: {
-        color: '#9e2146',
-      },
-    },
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="checkout-form">
-      <div className="form-group">
-        <label htmlFor="card-element" className="block mb-2 text-sm font-medium">
-          Credit or debit card
-        </label>
-        <CardElement
-          id="card-element"
-          options={cardElementOptions}
-          className="card-element border p-3 rounded"
-        />
+    <div className="max-w-md mx-auto p-6 border rounded bg-white shadow-md">
+      <div className="mb-6">
+        <h3 className="text-xl font-semibold mb-4">Payment Details</h3>
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <p className="text-gray-700 mb-2">
+            <span className="font-medium">Amount:</span> ${(paymentAmount / 100).toFixed(2)}
+          </p>
+          <p className="text-gray-700 mb-2">
+            <span className="font-medium">Appointment ID:</span> {currentAppointmentId}
+          </p>
+          {user && (
+            <p className="text-gray-700">
+              <span className="font-medium">User:</span> {user.email || user.username}
+            </p>
+          )}
+        </div>
       </div>
 
       {errorMessage && (
-        <div className="text-red-600 text-sm mt-2">{errorMessage}</div>
+        <div className="text-red-600 text-sm mb-4 p-3 bg-red-50 border border-red-200 rounded">
+          {errorMessage}
+        </div>
       )}
 
       <button
-        type="submit"
-        disabled={!stripe || isProcessing}
-        className={`mt-4 px-4 py-2 rounded text-white ${isProcessing ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'}`}
+        onClick={handleCheckout}
+        disabled={isProcessing || !stripe}
+        className={`w-full py-3 rounded-lg text-white font-semibold transition-colors ${
+          isProcessing || !stripe
+            ? "bg-gray-400 cursor-not-allowed" 
+            : "bg-blue-600 hover:bg-blue-700"
+        }`}
       >
-        {isProcessing ? 'Processing...' : `Pay $${(amount / 100).toFixed(2)}`}
+        {isProcessing ? "Redirecting to Checkout..." : "Proceed to Checkout"}
       </button>
-    </form>
+
+      <p className="text-sm text-gray-500 mt-4 text-center">
+        You will be redirected to Stripe's secure checkout page
+      </p>
+    </div>
   );
 };
 

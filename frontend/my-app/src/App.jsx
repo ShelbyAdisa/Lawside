@@ -18,11 +18,17 @@ import Chat from './pages/Chat';
 import LegalResources from './pages/LegalResources';
 import TrackFinances from './pages/TrackFinances';
 import AppointmentsPage from './pages/Appointments';
-import PaymentForm from './components/PaymentForm';
 import PaymentSuccess from './components/PaymentSuccess';
+import CheckoutForm from './components/CheckoutForm';
 import History from './pages/History';
 import PaymentPage from './components/PaymentPage';
 import './App.css';
+
+// Stripe imports
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe('pk_test_51RiX3qBHnuH9MYZ3No97OApwAUet1MWXQMZgAlNJu64k2bf0fCKXOk8IaxGR8JQ4MZi8pvr3CjkN8YAwPP0VUtSn002LapSlr4');
 
 function App() {
   const [user, setUser] = useState(null);
@@ -34,12 +40,13 @@ function App() {
     }
   }, []);
 
+  const appearance = { theme: 'stripe' };
+
   return (
     <Router>
       <div className="App">
-        {/* Single Navbar - only render here */}
         <Navbar user={user} setUser={setUser} />
-        
+
         <main className="main-content">
           <Routes>
             {/* Public Routes */}
@@ -57,30 +64,49 @@ function App() {
             <Route path="/appointments" element={<AppointmentsPage />} />
             <Route path="/history" element={<History />} />
             <Route path="/payment" element={<PaymentPage />} />
+
             {/* Payment Routes */}
-            <Route path="/checkout" element={<PaymentForm />} />
+            <Route
+              path="/checkout"
+              element={
+                <Elements stripe={stripePromise}>
+                  <CheckoutForm amount={2000} appointmentId={1} user={user} />
+                </Elements>
+              }
+            />
+            
+            {/* You can add more checkout routes with different amounts */}
+            <Route
+              path="/checkout/:appointmentId"
+              element={
+                <Elements stripe={stripePromise}>
+                  <CheckoutForm user={user} />
+                </Elements>
+              }
+            />
+            
             <Route path="/payment-success" element={<PaymentSuccess />} />
 
             {/* Protected Routes */}
-            <Route 
-              path="/dashboard" 
+            <Route
+              path="/dashboard"
               element={
                 <ProtectedRoute>
                   <Dashboard user={user} />
                 </ProtectedRoute>
-              } 
+              }
             />
-            <Route 
-              path="/lawyer-availability" 
+            <Route
+              path="/lawyer-availability"
               element={
                 <ProtectedRoute>
                   <LawyerAvailabilityForm />
                 </ProtectedRoute>
-              } 
+              }
             />
           </Routes>
         </main>
-        
+
         <Footer />
       </div>
     </Router>
