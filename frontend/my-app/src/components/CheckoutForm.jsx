@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useStripe } from "@stripe/react-stripe-js";
 
 const CheckoutForm = ({ amount, appointmentId, user }) => {
   const stripe = useStripe();
   const params = useParams();
+  const location = useLocation();
+  const state = location.state || {};
+
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Get appointmentId from URL params if not provided as prop
-  const currentAppointmentId = appointmentId || params.appointmentId || 1;
-  const paymentAmount = amount || 2000; // Default to $20.00
+  const currentAppointmentId = state.appointment_id || appointmentId || params.appointmentId || 1;
+  const paymentAmount = state.amount || amount || 2000;
 
   const handleCheckout = async () => {
     if (!stripe) {
@@ -23,40 +25,34 @@ const CheckoutForm = ({ amount, appointmentId, user }) => {
 
     try {
       const token = localStorage.getItem("authToken");
-      
-      // Create checkout session
+
       const response = await fetch("http://localhost:8000/api/payments/create-checkout-session/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ 
-          amount: paymentAmount, 
-          appointment_id: currentAppointmentId 
+        body: JSON.stringify({
+          amount: paymentAmount/134,
+          appointment_id: currentAppointmentId,
+          lawyer_id: state.lawyer_id,
+          client_id: state.client_id,
+          date: state.date,
+          message: state.message,
         }),
       });
 
       if (!response.ok) {
-
-        console.log(JSON.stringify({ 
-     amount: paymentAmount, 
-     appointment_id: currentAppointmentId 
-   }));
-
         throw new Error(`HTTP error! status: ${response.status}`);
-
-        
       }
-
 
       const data = await response.json();
       if (!data.checkout_url) throw new Error("No checkout URL received from server.");
-        window.location.href = data.checkout_url;
+      window.location.href = data.checkout_url;
 
     } catch (err) {
       console.error("Checkout error:", err);
-      //setErrorMessage("Failed to start checkout. Please try again.");
+      setErrorMessage("Failed to start checkout. Please try again.");
     } finally {
       setIsProcessing(false);
     }
@@ -68,7 +64,7 @@ const CheckoutForm = ({ amount, appointmentId, user }) => {
         <h3 className="text-xl font-semibold mb-4">Payment Details</h3>
         <div className="bg-gray-50 p-4 rounded-lg">
           <p className="text-gray-700 mb-2">
-            <span className="font-medium">Amount:</span> ${(paymentAmount / 100).toFixed(2)}
+            <span className="font-medium">Amount:</span> KES{(paymentAmount).toFixed(2)}
           </p>
           <p className="text-gray-700 mb-2">
             <span className="font-medium">Appointment ID:</span> {currentAppointmentId}
@@ -92,7 +88,7 @@ const CheckoutForm = ({ amount, appointmentId, user }) => {
         disabled={isProcessing || !stripe}
         className={`w-full py-3 rounded-lg text-white font-semibold transition-colors ${
           isProcessing || !stripe
-            ? "bg-gray-400 cursor-not-allowed" 
+            ? "bg-gray-400 cursor-not-allowed"
             : "bg-blue-600 hover:bg-blue-700"
         }`}
       >
