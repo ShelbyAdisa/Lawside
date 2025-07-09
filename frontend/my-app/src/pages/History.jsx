@@ -1,111 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import { CalendarDays, User, Clock, BadgeDollarSign } from "lucide-react";
-
-const initialAppointments = [
-  {
-    id: 1,
-    client: "Jane Smith",
-    date: "2025-07-02",
-    time: "3:00 PM",
-    status: "Confirmed",
-    fee: "$200",
-    description: "Contract review and consultation",
-  },
-  {
-    id: 2,
-    client: "Michael Thompson",
-    date: "2025-07-03",
-    time: "10:30 AM",
-    status: "Confirmed",
-    fee: "$180",
-    description: "Family law consultation",
-  },
-  {
-    id: 3,
-    client: "Sophia Rodriguez",
-    date: "2025-07-04",
-    time: "1:00 PM",
-    status: "Confirmed",
-    fee: "$220",
-    description: "Divorce case strategy session",
-  },
-  {
-    id: 4,
-    client: "David Kim",
-    date: "2025-07-05",
-    time: "9:00 AM",
-    status: "Confirmed",
-    fee: "$250",
-    description: "Intellectual property rights consultation",
-  },
-  {
-    id: 5,
-    client: "Emily Nguyen",
-    date: "2025-07-06",
-    time: "4:00 PM",
-    status: "Confirmed",
-    fee: "$190",
-    description: "Employment contract review",
-  },
-  {
-    id: 6,
-    client: "Brian Lee",
-    date: "2025-07-07",
-    time: "2:30 PM",
-    status: "Confirmed",
-    fee: "$210",
-    description: "Mediation session",
-  },
-  {
-    id: 7,
-    client: "Natalie Perez",
-    date: "2025-07-08",
-    time: "11:00 AM",
-    status: "Confirmed",
-    fee: "$175",
-    description: "Real estate closing consultation",
-  },
-  {
-    id: 8,
-    client: "Jason Clark",
-    date: "2025-07-09",
-    time: "5:00 PM",
-    status: "Confirmed",
-    fee: "$230",
-    description: "Criminal defense strategy meeting",
-  },
-  {
-    id: 9,
-    client: "Ava Mitchell",
-    date: "2025-07-10",
-    time: "12:00 PM",
-    status: "Confirmed",
-    fee: "$160",
-    description: "Immigration paperwork assistance",
-  },
-  {
-    id: 10,
-    client: "Christopher Allen",
-    date: "2025-07-11",
-    time: "3:30 PM",
-    status: "Confirmed",
-    fee: "$200",
-    description: "Tax law consultation",
-  },
-];
-
+import { UserContext } from "../context/UserContext"; // Optional if filtering by user later
 
 export default function AppointmentsPage() {
-  const [appointments] = useState(initialAppointments);
+  const [appointments, setAppointments] = useState([]);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/appointments/public/")
+      .then((res) => {
+        setAppointments(res.data.results);
+      })
+      .catch((err) => {
+        console.error("Error fetching appointments:", err);
+      });
+  }, []);
+
   const filteredAppointments = appointments.filter((appt) => {
+    const searchText = search.toLowerCase();
     return (
       (search === "" ||
-        appt.client.toLowerCase().includes(search.toLowerCase()) ||
-        appt.status.toLowerCase().includes(search.toLowerCase()) ||
-        appt.description.toLowerCase().includes(search.toLowerCase())) &&
+        appt.client_name?.toLowerCase().includes(searchText) ||
+        appt.status?.toLowerCase().includes(searchText) ||
+        appt.description?.toLowerCase().includes(searchText)) &&
       (statusFilter === "all" || appt.status === statusFilter)
     );
   });
@@ -143,7 +63,7 @@ export default function AppointmentsPage() {
           >
             <div className="flex items-center gap-2">
               <User className="text-purple-600 w-4 h-4" />
-              <h2 className="text-lg font-semibold">{appt.client}</h2>
+              <h2 className="text-lg font-semibold">{appt.client_name}</h2>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <CalendarDays className="w-4 h-4 text-purple-600" />
@@ -153,7 +73,7 @@ export default function AppointmentsPage() {
             </div>
             <div className="flex items-center gap-2 text-sm">
               <BadgeDollarSign className="w-4 h-4 text-purple-600" />
-              <span className="text-gray-700 font-medium">{appt.fee}</span>
+              <span className="text-gray-700 font-medium">KES {appt.fee}</span>
             </div>
             <div className="text-sm text-gray-600 italic">{appt.description}</div>
             <div className="inline-block px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
@@ -163,7 +83,7 @@ export default function AppointmentsPage() {
         ))}
         {filteredAppointments.length === 0 && (
           <p className="text-center text-sm text-gray-500">
-            No clients found.
+            No appointments found.
           </p>
         )}
       </div>
