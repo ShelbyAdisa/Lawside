@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -20,12 +21,21 @@ export default function Lawyers() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
-  const [selectedPracticeArea, setSelectedPracticeArea] = useState("");
-  const [priceRange, setPriceRange] = useState("");
   const [selectedLawyer, setSelectedLawyer] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [message, setMessage] = useState("");
+  const location = useLocation();
+  const { selectedPractice, selectedBudget, currency } = location.state || {};
+
+  const [selectedPracticeArea, setSelectedPracticeArea] = useState(selectedPractice?.name || "");
+  const [priceRange, setPriceRange] = useState(() => {
+    if (!selectedBudget) return "";
+    const budget = parseInt(selectedBudget);
+    if (budget <= 10000) return "0-10000";
+    if (budget <= 20000) return "10000-20000";
+    return "20000+";
+  });
 
   useEffect(() => {
     axios
