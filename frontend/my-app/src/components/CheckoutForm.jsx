@@ -45,6 +45,7 @@ const CheckoutForm = ({ amount, appointmentId, user }) => {
           client_id: state.client_id,
           date: state.date,
           message: state.message,
+          success_url: `${window.location.origin}/payment-success`
         }),
       });
 

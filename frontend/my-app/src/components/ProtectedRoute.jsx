@@ -1,10 +1,11 @@
+import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem('authToken');
+  const { token } = useContext(AuthContext);
 
-  // If token exists, allow access to the protected component
-  return token ? children : <Navigate to="/login" replace />;
+  return token ? children : <Navigate to="/" replace />;
 };
 
 export default ProtectedRoute;

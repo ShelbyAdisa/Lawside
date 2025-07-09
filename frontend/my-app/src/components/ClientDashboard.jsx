@@ -107,7 +107,7 @@ export default function ClientDashboard() {
         <div className="bg-white p-4 rounded-lg shadow flex items-center justify-between">
           <div>
             <p className="text-sm text-gray-500">Documents Uploaded</p>
-            <AnimatedCounter value="5" className="text-xl font-bold text-blue-600" />
+            <AnimatedCounter value="4" className="text-xl font-bold text-blue-600" />
           </div>
           <FileText className="w-6 h-6 text-blue-500" />
         </div>
