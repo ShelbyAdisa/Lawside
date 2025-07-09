@@ -5,7 +5,7 @@ import PaymentSuccess from './PaymentSuccess';
 const PaymentPage = () => {
   const [paymentStatus, setPaymentStatus] = useState('initial'); // 'initial', 'success', 'error', 'loading'
   const [paymentDetails, setPaymentDetails] = useState(null);
-  const amount = 2000; // $20.00 in cents
+  const amount = 20; // $20.00 in cents
 
   const handleCheckoutRedirect = async () => {
     setPaymentStatus('loading');

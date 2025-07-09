@@ -57,3 +57,18 @@ INFO 2025-07-09 07:09:51,577 _util 13476 11704 message='Request to Stripe api' m
 INFO 2025-07-09 07:09:53,800 _util 13476 11704 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
 INFO 2025-07-09 07:10:14,758 _util 13476 7016 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
 INFO 2025-07-09 07:10:16,841 _util 13476 7016 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 09:35:01,313 _util 13476 15488 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 09:35:02,923 _util 13476 15488 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 09:36:44,282 _util 13476 15488 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 09:36:45,959 _util 13476 15488 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 09:39:37,700 _util 13476 15488 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 09:39:39,361 _util 13476 15488 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 09:40:23,234 _util 13476 15488 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 09:40:23,832 _util 13476 15488 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 10:00:47,128 _util 13476 13472 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 10:00:47,156 _util 13476 13472 message='Encountered a retryable error Unexpected error communicating with Stripe.  If this problem persists,\nlet us know at support@stripe.com.\n\n(Network error: ConnectionError: HTTPSConnectionPool(host=\'api.stripe.com\', port=443): Max retries exceeded with url: /v1/checkout/sessions (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001AFEAC77D90>: Failed to resolve \'api.stripe.com\' ([Errno 11001] getaddrinfo failed)")))'
+INFO 2025-07-09 10:00:47,158 _util 13476 13472 message='Initiating retry 1 for request post https://api.stripe.com/v1/checkout/sessions after sleeping 0.50 seconds.'
+INFO 2025-07-09 10:00:47,660 _util 13476 13472 message='Encountered a retryable error Unexpected error communicating with Stripe.  If this problem persists,\nlet us know at support@stripe.com.\n\n(Network error: ConnectionError: HTTPSConnectionPool(host=\'api.stripe.com\', port=443): Max retries exceeded with url: /v1/checkout/sessions (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001AFEAC77C50>: Failed to resolve \'api.stripe.com\' ([Errno 11001] getaddrinfo failed)")))'
+INFO 2025-07-09 10:00:47,661 _util 13476 13472 message='Initiating retry 2 for request post https://api.stripe.com/v1/checkout/sessions after sleeping 0.52 seconds.'
+INFO 2025-07-09 10:01:03,533 _util 13476 14532 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 10:01:05,452 _util 13476 14532 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200

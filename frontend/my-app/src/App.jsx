@@ -17,7 +17,7 @@ import Documents from './pages/Documents';
 import Chat from './pages/Chat';
 import LegalResources from './pages/LegalResources';
 import TrackFinances from './pages/TrackFinances';
-import AppointmentsPage from './pages/Appointments';
+import AppointmentsPage from './components/Appointments';
 import PaymentSuccess from './components/PaymentSuccess';
 import CheckoutForm from './components/CheckoutForm';
 import History from './pages/History';

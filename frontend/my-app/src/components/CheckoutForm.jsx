@@ -10,7 +10,7 @@ const CheckoutForm = ({ amount, appointmentId, user }) => {
 
   // Get appointmentId from URL params if not provided as prop
   const currentAppointmentId = appointmentId || params.appointmentId || 1;
-  const paymentAmount = amount || 2000; // Default to $20.00
+  const paymentAmount = amount || 20; // Default to $20.00
 
   const handleCheckout = async () => {
     if (!stripe) {
