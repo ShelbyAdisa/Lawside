@@ -57,6 +57,7 @@ INFO 2025-07-09 07:09:51,577 _util 13476 11704 message='Request to Stripe api' m
 INFO 2025-07-09 07:09:53,800 _util 13476 11704 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
 INFO 2025-07-09 07:10:14,758 _util 13476 7016 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
 INFO 2025-07-09 07:10:16,841 _util 13476 7016 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+<<<<<<< HEAD
 INFO 2025-07-09 09:35:01,313 _util 13476 15488 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
 INFO 2025-07-09 09:35:02,923 _util 13476 15488 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
 INFO 2025-07-09 09:36:44,282 _util 13476 15488 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
@@ -72,3 +73,13 @@ INFO 2025-07-09 10:00:47,660 _util 13476 13472 message='Encountered a retryable 
 INFO 2025-07-09 10:00:47,661 _util 13476 13472 message='Initiating retry 2 for request post https://api.stripe.com/v1/checkout/sessions after sleeping 0.52 seconds.'
 INFO 2025-07-09 10:01:03,533 _util 13476 14532 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
 INFO 2025-07-09 10:01:05,452 _util 13476 14532 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+=======
+INFO 2025-07-09 09:49:29,946 _util 17296 3864 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 09:49:31,321 _util 17296 3864 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 09:50:22,888 _util 17296 3864 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 09:50:23,467 _util 17296 3864 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 09:53:28,191 _util 17296 3864 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 09:53:29,613 _util 17296 3864 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-09 09:54:41,934 _util 17296 3864 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-09 09:54:42,522 _util 17296 3864 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+>>>>>>> 12a1c93f20efeac4055da5a783d532c5d9695f59
