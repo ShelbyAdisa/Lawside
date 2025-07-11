@@ -11,14 +11,8 @@ const CheckoutForm = ({ amount, appointmentId, user }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-<<<<<<< HEAD
-  // Get appointmentId from URL params if not provided as prop
-  const currentAppointmentId = appointmentId || params.appointmentId || 1;
-  const paymentAmount = amount || 20; // Default to $20.00
-=======
   const currentAppointmentId = state.appointment_id || appointmentId || params.appointmentId || 1;
   const paymentAmount = state.amount || amount || 2000;
->>>>>>> 12a1c93f20efeac4055da5a783d532c5d9695f59
 
   const handleCheckout = async () => {
     if (!stripe) {
