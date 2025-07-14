@@ -102,3 +102,5 @@ INFO 2025-07-09 13:41:45,525 _util 3408 14588 message='Request to Stripe api' me
 INFO 2025-07-09 13:41:47,218 _util 3408 14588 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
 INFO 2025-07-09 15:05:23,749 _util 3408 13944 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
 INFO 2025-07-09 15:05:27,623 _util 3408 13944 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200
+INFO 2025-07-11 20:24:59,064 _util 15844 14832 message='Request to Stripe api' method=post url=https://api.stripe.com/v1/checkout/sessions
+INFO 2025-07-11 20:25:00,798 _util 15844 14832 message='Stripe API response' path=https://api.stripe.com/v1/checkout/sessions response_code=200

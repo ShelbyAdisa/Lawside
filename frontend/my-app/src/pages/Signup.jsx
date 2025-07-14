@@ -30,7 +30,7 @@ export default function Signup() {
         'Signup failed. Check inputs.';
       alert(message);
       console.error('Signup error:', errData || error.message);
-    }
+    } 
   };
 
   return (
