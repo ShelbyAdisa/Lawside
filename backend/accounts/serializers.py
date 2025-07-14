@@ -15,7 +15,7 @@ class CustomLoginSerializer(LoginSerializer):
         return super().validate(attrs)
     
 class CustomUserDetailsSerializer(UserDetailsSerializer):
-    user_type = serializers.CharField(source='user_type', read_only=True)
+    user_type = serializers.CharField(read_only=True)
     pk = serializers.IntegerField(source='id', read_only=True)
 
     def __init__(self, *args, **kwargs):

@@ -16,9 +16,7 @@ const Dashboard = () => {
     );
   }
 
-  // Check email-based role override
-  const lawyerEmails = ["john.johnson@example.com", "donna.garrett@example.com"];
-  const isLawyer = lawyerEmails.includes(user.email);
+  const isLawyer = user.user_type === "lawyer";
 
   return (
     <DashboardLayout>

@@ -216,8 +216,8 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 # LOGOUT_REDIRECT_URL = '/'
 REST_AUTH_SERIALIZERS = {
     'LOGIN_SERIALIZER': 'accounts.serializers.CustomLoginSerializer',
-   #'USER_DETAILS_SERIALIZER': 'dj_rest_auth.serializers.UserDetailsSerializer',
-    #'USER_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer',
+   'USER_DETAILS_SERIALIZER': 'dj_rest_auth.serializers.UserDetailsSerializer',
+    'USER_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer',
     'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer', 
 }
 
