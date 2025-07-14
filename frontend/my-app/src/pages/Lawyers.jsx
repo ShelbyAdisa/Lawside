@@ -306,7 +306,7 @@ export default function Lawyers() {
                 <div className="mb-6">
                   <div className="flex items-center gap-2 mb-3">
                     <MapPin className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-gray-600">{lawyer.location || "Location not specified"}</span>
+                    <span className="text-sm text-gray-600">{lawyer.office_address || "Location not specified"}</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {lawyer.practice_areas?.map((area, index) => (
@@ -321,7 +321,7 @@ export default function Lawyers() {
                 </div>
                 
                 <p className="text-gray-600 text-sm mb-6 line-clamp-3 leading-relaxed">
-                  {lawyer.bio || "No bio available"}
+                  {lawyer.biography || "No bio available"}
                 </p>
                 
                 <button
@@ -391,7 +391,7 @@ export default function Lawyers() {
                       <User className="w-5 h-5 text-blue-600" />
                       About
                     </h3>
-                    <p className="text-gray-700 leading-relaxed">{selectedLawyer.bio || "No bio available"}</p>
+                    <p className="text-gray-700 leading-relaxed">{selectedLawyer.biography || "No bio available"}</p>
                   </div>
                   
                   <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-6">
@@ -417,7 +417,7 @@ export default function Lawyers() {
                         <MapPin className="h-5 w-5 text-purple-600" />
                         <h3 className="text-lg font-semibold">Location</h3>
                       </div>
-                      <p className="text-gray-700">{selectedLawyer.location || "Not specified"}</p>
+                      <p className="text-gray-700">{selectedLawyer.office_address || "Not specified"}</p>
                     </div>
                     
                     <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-6">
