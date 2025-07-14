@@ -4,6 +4,9 @@ import {
   FileText,
   DollarSign,
   UserCircle,
+  CheckCircle,
+  Clock,
+  MessageCircle
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
@@ -53,18 +56,15 @@ function LawyerDashboardContent() {
         const data = await res.json();
         const allAppointments = data.results || [];
 
-        // Filter for this lawyer
         const filtered = allAppointments.filter(
           (a) => a.lawyer_email === user?.email
         );
         setAppointments(allAppointments);
         setLawyerAppointments(filtered);
 
-        // Unique client emails
         const uniqueClientEmails = [...new Set(filtered.map((a) => a.client_email))];
         setUniqueClients(uniqueClientEmails);
 
-        // Most booked weekday
         const dayCount = {};
         filtered.forEach((a) => {
           const date = new Date(a.date);
@@ -84,115 +84,170 @@ function LawyerDashboardContent() {
   }, [user]);
 
   return (
-    <div className="space-y-8">
-      {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-purple-100 to-purple-200 p-6 rounded-xl shadow flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-purple-800">
-            Welcome Back, Advocate {user?.last_name || ""}
-          </h2>
-          <p className="text-gray-700 mt-1">
-            Your dashboard gives an overview of your legal work and client activity.
-          </p>
+    <div className="bg-gradient-to-br from-gray-50 via-white to-purple-50 min-h-screen">
+      {/* Hero */}
+      <section className="relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-500 rounded-full opacity-10 animate-pulse"></div>
+          <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-pink-500 rounded-full opacity-10 animate-pulse delay-1000"></div>
+          <div className="absolute bottom-1/4 left-1/2 w-64 h-64 bg-indigo-500 rounded-full opacity-10 animate-pulse delay-2000"></div>
         </div>
-        <UserCircle className="w-12 h-12 text-purple-700" />
-      </div>
 
-      {/* Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white p-4 rounded-lg shadow flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-500">Total Clients</p>
-            <AnimatedCounter
-              value={uniqueClients.length.toString()}
-              className="text-xl font-bold text-purple-700"
-            />
-          </div>
-          <UserCircle className="w-6 h-6 text-purple-500" />
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-500">Pending Appointments</p>
-            <AnimatedCounter
-              value={lawyerAppointments.filter((a) => a.status === "pending").length.toString()}
-              className="text-xl font-bold text-yellow-600"
-            />
-          </div>
-          <CalendarCheck className="w-6 h-6 text-yellow-500" />
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-500">Most Booked Day</p>
-            <h3 className="text-xl font-bold text-purple-600">{mostBookedDay || "—"}</h3>
-          </div>
-          <FileText className="w-6 h-6 text-purple-500" />
-        </div>
-      </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="mb-4 inline-flex items-center gap-2 bg-purple-600/20 backdrop-blur-sm border border-purple-400/30 rounded-full px-4 py-2">
+                <CheckCircle className="w-4 h-4 text-green-400" />
+                <span className="text-sm font-medium">Lawyer Portal</span>
+              </div>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <button
-          onClick={() => navigate("/appointments")}
-          className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition"
-        >
-          <CalendarCheck className="w-6 h-6 text-purple-600" />
-          <span className="mt-2 text-sm font-medium text-gray-700">Appointments</span>
-        </button>
-        <button
-          onClick={() => navigate("/history")}
-          className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition"
-        >
-          <FileText className="w-6 h-6 text-purple-600" />
-          <span className="mt-2 text-sm font-medium text-gray-700">Client History</span>
-        </button>
-        <button
-          onClick={() => navigate("/finances")}
-          className="flex flex-col items-center justify-center bg-white border rounded-lg p-4 shadow hover:bg-gray-50 transition"
-        >
-          <DollarSign className="w-6 h-6 text-purple-600" />
-          <span className="mt-2 text-sm font-medium text-gray-700">Track Finances</span>
-        </button>
-      </div>
-
-      {/* Appointments Section */}
-      <section className="bg-white p-6 rounded-xl shadow">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">
-          Upcoming Client Appointments
-        </h3>
-        {lawyerAppointments.length ? (
-          <ul className="divide-y divide-gray-200">
-            {lawyerAppointments.map((appt) => (
-              <li key={appt.id} className="py-4 flex justify-between items-center">
-                <div>
-                  <p className="text-gray-800 font-medium">
-                    {appt.client_name || appt.client_email}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {appt.date} at {appt.time?.slice(0, 5)}
-                  </p>
-                </div>
-                <span className={`text-sm font-semibold px-3 py-1 rounded-full ${
-                  appt.status === "confirmed"
-                    ? "bg-purple-100 text-purple-700"
-                    : appt.status === "pending"
-                    ? "bg-yellow-100 text-yellow-700"
-                    : "bg-gray-200 text-gray-700"
-                }`}>
-                  {appt.status.charAt(0).toUpperCase() + appt.status.slice(1)}
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+                Welcome Back,{" "}
+                <span className="block bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  Advocate {user?.last_name}
                 </span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-600 italic">You have no upcoming appointments.</p>
-        )}
+              </h1>
+
+              <p className="text-xl text-gray-300 max-w-2xl leading-relaxed">
+                Your dashboard gives an overview of your legal work and client activity.
+              </p>
+            </div>
+
+            <div className="hidden md:block">
+              <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center shadow-2xl">
+                <UserCircle className="w-12 h-12 text-white" />
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* Footer */}
-      <footer className="text-center text-sm text-gray-500 py-6">
-        For assistance, contact admin at{" "}
-        <span className="text-purple-700 font-medium">admin@lawfirm.com</span>
-      </footer>
+      {/* Dashboard Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="group bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all border border-gray-100 hover:border-purple-200 transform hover:-translate-y-2">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-500 mb-2">Total Clients</p>
+                <AnimatedCounter
+                  value={uniqueClients.length.toString()}
+                  className="text-3xl font-bold text-purple-600"
+                />
+              </div>
+              <div className="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <UserCircle className="w-8 h-8 text-purple-600" />
+              </div>
+            </div>
+          </div>
+
+          <div className="group bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all border border-gray-100 hover:border-yellow-200 transform hover:-translate-y-2">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-500 mb-2">Pending Appointments</p>
+                <AnimatedCounter
+                  value={lawyerAppointments.filter((a) => a.status === "pending").length.toString()}
+                  className="text-3xl font-bold text-yellow-600"
+                />
+              </div>
+              <div className="w-16 h-16 bg-yellow-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <CalendarCheck className="w-8 h-8 text-yellow-600" />
+              </div>
+            </div>
+          </div>
+
+          <div className="group bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all border border-gray-100 hover:border-pink-200 transform hover:-translate-y-2">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-500 mb-2">Most Booked Day</p>
+                <h3 className="text-3xl font-bold text-pink-600">{mostBookedDay || "—"}</h3>
+              </div>
+              <div className="w-16 h-16 bg-pink-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <FileText className="w-8 h-8 text-pink-600" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <button
+            onClick={() => navigate("/appointments")}
+            className="group text-center p-10 bg-white rounded-2xl shadow-xl hover:shadow-2xl border border-gray-100 hover:border-purple-200 transition-transform transform hover:-translate-y-2 hover:scale-105"
+          >
+            <div className="w-20 h-20 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+              <CalendarCheck className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-bold mb-3 text-gray-900">Appointments</h3>
+          </button>
+
+          <button
+            onClick={() => navigate("/history")}
+            className="group text-center p-10 bg-white rounded-2xl shadow-xl hover:shadow-2xl border border-gray-100 hover:border-purple-200 transition-transform transform hover:-translate-y-2 hover:scale-105"
+          >
+            <div className="w-20 h-20 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+              <FileText className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-bold mb-3 text-gray-900">Client History</h3>
+          </button>
+
+          <button
+            onClick={() => navigate("/finances")}
+            className="group text-center p-10 bg-white rounded-2xl shadow-xl hover:shadow-2xl border border-gray-100 hover:border-purple-200 transition-transform transform hover:-translate-y-2 hover:scale-105"
+          >
+            <div className="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+              <DollarSign className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-bold mb-3 text-gray-900">Track Finances</h3>
+          </button>
+        </div>
+
+        {/* Appointments List */}
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+          <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-8">
+            <h3 className="text-2xl font-bold text-white mb-2">Upcoming Client Appointments</h3>
+            <p className="text-purple-100">
+              Review your scheduled client consultations
+            </p>
+          </div>
+
+          <div className="p-8">
+            {lawyerAppointments.length ? (
+              <ul className="divide-y divide-gray-200">
+                {lawyerAppointments.map((appt) => (
+                  <li key={appt.id} className="py-4 flex justify-between items-center">
+                    <div>
+                      <p className="text-gray-800 font-medium">
+                        {appt.client_name || appt.client_email}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        {appt.date} at {appt.time?.slice(0, 5)}
+                      </p>
+                    </div>
+                    <span className={`text-sm font-semibold px-3 py-1 rounded-full ${
+                      appt.status === "confirmed"
+                        ? "bg-purple-100 text-purple-700"
+                        : appt.status === "pending"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-gray-200 text-gray-700"
+                    }`}>
+                      {appt.status.charAt(0).toUpperCase() + appt.status.slice(1)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-600 italic">You have no upcoming appointments.</p>
+            )}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <footer className="text-center text-sm text-gray-500 py-6">
+          For assistance, contact admin at{" "}
+          <span className="text-purple-700 font-medium">admin@lawfirm.com</span>
+        </footer>
+      </div>
     </div>
   );
 }
