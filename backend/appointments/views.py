@@ -4,8 +4,9 @@ from .serializers import AppointmentCreateSerializer, AppointmentReadSerializer
 
 
 class AppointmentCreateView(generics.CreateAPIView):
+    queryset = Appointment.objects.all()
     serializer_class = AppointmentCreateSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [] #need to add permissions.IsAuthenticated once this works 
 
 class AppointmentListView(generics.ListAPIView):
     serializer_class = AppointmentCreateSerializer 

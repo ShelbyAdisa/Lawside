@@ -13,6 +13,8 @@ const CheckoutForm = ({ amount, appointmentId, user }) => {
 
   const currentAppointmentId = state.appointment_id || appointmentId || params.appointmentId || 1;
   const paymentAmount = state.amount || amount || 2000;
+  console.log("Client ID being sent:", state.client_id);
+
 
   const handleCheckout = async () => {
     if (!stripe) {

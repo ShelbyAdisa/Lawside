@@ -11,7 +11,6 @@ const PaymentSuccess = () => {
 
   useEffect(() => {
     if (sessionId) {
-      // Optionally verify the session with your backend
       verifySession(sessionId);
     } else {
       setLoading(false);
@@ -20,10 +19,10 @@ const PaymentSuccess = () => {
 
   const verifySession = async (sessionId) => {
     try {
-      const token = localStorage.getItem("accessToken");
-      const response = await fetch(`http://localhost:8000/api/verify-session/${sessionId}/`, {
+      const token = localStorage.getItem("authToken");
+      const response = await fetch(`http://localhost:8000/api/payments/verify-session/${sessionId}/`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Token ${token}`, // Change to Bearer if needed
         },
       });
 
@@ -40,6 +39,18 @@ const PaymentSuccess = () => {
     }
   };
 
+  const formatDate = (dateStr) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateStr).toLocaleDateString(undefined, options);
+  };
+
+  const formatTime = (timeStr) => {
+    const [hour, minute] = timeStr.split(':');
+    const date = new Date();
+    date.setHours(hour, minute);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
   if (loading) {
     return (
       <div className="max-w-md mx-auto p-6 text-center">
@@ -53,31 +64,29 @@ const PaymentSuccess = () => {
       <div className="text-center">
         <div className="text-green-600 text-6xl mb-4">✓</div>
         <h2 className="text-2xl font-bold text-green-600 mb-4">Payment Successful!</h2>
-        
+
         {sessionInfo && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded">
-            <p className="text-sm text-green-800">
-              <strong>Amount:</strong> ${(sessionInfo.amount / 100).toFixed(2)}
-            </p>
-            <p className="text-sm text-green-800">
-              <strong>Appointment ID:</strong> {sessionInfo.appointment_id}
-            </p>
-            <p className="text-sm text-green-800">
-              <strong>Session ID:</strong> {sessionId}
-            </p>
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded text-left">
+            <p className="text-sm text-green-800"><strong>Amount:</strong> ${(sessionInfo.amount / 100).toFixed(2)}</p>
+            <p className="text-sm text-green-800"><strong>Appointment ID:</strong> {sessionInfo.appointment_id}</p>
+            <p className="text-sm text-green-800"><strong>Date:</strong> {formatDate(sessionInfo.date)}</p>
+            <p className="text-sm text-green-800"><strong>Time:</strong> {formatTime(sessionInfo.time)}</p>
+            <p className="text-sm text-green-800"><strong>Lawyer:</strong> {sessionInfo.lawyer.name}</p>
+            <p className="text-sm text-green-800"><strong>Lawyer Email:</strong> {sessionInfo.lawyer.email}</p>
+            <p className="text-sm text-green-800"><strong>Session ID:</strong> {sessionId}</p>
           </div>
         )}
-        
+
         {error && (
           <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded">
             <p className="text-sm text-yellow-800">{error}</p>
           </div>
         )}
-        
+
         <p className="text-gray-600 mb-6">
           Thank you for your payment! You will receive a confirmation email shortly.
         </p>
-        
+
         <div className="space-y-3">
           <Link 
             to="/appointments" 

@@ -10,4 +10,5 @@ urlpatterns = [
     # ('appointments/', AppointmentListCreateView.as_view(), name='appointments'),
     path('', AppointmentListView.as_view(), name='appointment-list'),
     path('public/', PublicAppointmentListView.as_view(), name='public-appointments'),
+    path('create/', AppointmentCreateView.as_view(), name='appointment-create'),
 ]

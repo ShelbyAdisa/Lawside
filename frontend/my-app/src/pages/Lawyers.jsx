@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -38,6 +40,7 @@ export default function Lawyers() {
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const { selectedPractice, selectedBudget, currency } = location.state || {};
+  const { user } = useContext(UserContext);
 
   const [selectedPracticeArea, setSelectedPracticeArea] = useState(selectedPractice?.name || "");
   const [priceRange, setPriceRange] = useState(() => {
@@ -133,7 +136,7 @@ export default function Lawyers() {
     navigate("/checkout", {
       state: {
         lawyer_id: selectedLawyer.user_id,
-        client_id: null,
+        client_id: user?.pk,
         date: selectedDate.toISOString(),
         message,
         amount,

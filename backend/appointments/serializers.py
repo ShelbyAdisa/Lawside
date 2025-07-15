@@ -44,7 +44,9 @@ class AppointmentReadSerializer(serializers.ModelSerializer):
         return obj.lawyer.email
 
     def get_client_name(self, obj):
-        return f"{obj.client.first_name} {obj.client.last_name}"
+        if obj.client:
+            return f"{obj.client.first_name} {obj.client.last_name}"
+        return "Unknown Client"
 
     def get_client_email(self, obj):
         return obj.client.email
