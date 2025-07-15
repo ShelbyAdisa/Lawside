@@ -178,8 +178,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:5173",
     "https://lawside.onrender.com",
-    "https://lawside.vercel.app"
-    
+    "https://lawside.vercel.app"    
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -321,6 +320,8 @@ if not DEBUG:
     ALLOWED_HOSTS.extend([
         config('PRODUCTION_DOMAIN', default=''),
         config('PRODUCTION_DOMAIN_WWW', default=''),
+        'lawside.onrender.com',
+
     ])
     
     # Production CORS settings
