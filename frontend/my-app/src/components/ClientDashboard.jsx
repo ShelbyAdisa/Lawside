@@ -43,6 +43,22 @@ export default function ClientDashboard() {
   const [appointments, setAppointments] = useState([]);
   const [clientAppointments, setClientAppointments] = useState([]);
   const [isVisible, setIsVisible] = useState({});
+  const now = new Date();
+
+const upcomingAppointments = clientAppointments
+  .filter(appt => new Date(appt.date) > now)
+  .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+const nearestAppointment = upcomingAppointments[0];
+
+const formattedNearestDate = nearestAppointment
+  ? new Date(nearestAppointment.date).toLocaleDateString(undefined, {
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
+  : "No upcoming appointments";
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -178,7 +194,7 @@ export default function ClientDashboard() {
                 <div>
                   <p className="text-sm font-medium text-gray-500 mb-2">Total Appointments</p>
                   <AnimatedCounter
-                    value={(appointments?.length || 0).toString()}
+                    value={(clientAppointments.length || 0).toString()}
                     className="text-3xl font-bold text-blue-600"
                   />
                 </div>
@@ -193,7 +209,7 @@ export default function ClientDashboard() {
                 <div>
                   <p className="text-sm font-medium text-gray-500 mb-2">Pending Consults</p>
                   <AnimatedCounter
-                    value={Array.isArray(appointments) ? appointments.filter((a) => a.status === "pending").length.toString() : "0"}
+                    value={Array.isArray(clientAppointments) ? clientAppointments.filter((a) => a.status === "pending").length.toString() : "0"}
                     className="text-3xl font-bold text-yellow-600"
                   />
                 </div>
@@ -206,8 +222,12 @@ export default function ClientDashboard() {
             <div className="group bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-green-200 transform hover:-translate-y-2">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500 mb-2">Documents Uploaded</p>
-                  <AnimatedCounter value="4" className="text-3xl font-bold text-green-600" />
+                  <p className="text-sm font-medium text-gray-500 mb-2">
+                    Next Appointment
+                  </p>
+                  <p className="text-3xl font-bold text-indigo-600">
+                    {formattedNearestDate}
+                  </p>
                 </div>
                 <div className="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                   <FileText className="w-8 h-8 text-green-600" />
