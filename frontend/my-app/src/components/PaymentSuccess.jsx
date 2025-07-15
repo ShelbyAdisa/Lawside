@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 
+const API_BASE = import.meta.env.VITE_API_BASE;
+
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const [sessionInfo, setSessionInfo] = useState(null);
@@ -20,7 +22,7 @@ const PaymentSuccess = () => {
   const verifySession = async (sessionId) => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch(`http://localhost:8000/api/payments/verify-session/${sessionId}/`, {
+      const response = await fetch(`${API_BASE}/api/payments/verify-session/${sessionId}/`, {
         headers: {
           Authorization: `Token ${token}`, // Change to Bearer if needed
         },

@@ -13,10 +13,12 @@ export default function AppointmentsPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
+  const API_BASE = import.meta.env.VITE_API_BASE;
+
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/appointments/public/");
+        const res = await fetch(`${API_BASE}/api/appointments/public/`);
         if (!res.ok) throw new Error("Failed to fetch appointments");
         const data = await res.json();
         const filteredByUser = data.results.filter(

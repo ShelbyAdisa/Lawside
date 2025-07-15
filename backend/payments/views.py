@@ -38,7 +38,7 @@ def create_checkout_session(request):
             ],
             mode='payment',
             success_url=f"{data.get('success_url')}?session_id={{CHECKOUT_SESSION_ID}}",
-            cancel_url=data.get('cancel_url', 'http://localhost:8000/cancel'),
+            cancel_url=data.get('cancel_url', 'https://lawside.onrender.com/cancel'),
             metadata={
                 'appointment_id': data.get('appointment_id'),
                 'lawyer_id': data.get('lawyer_id'),

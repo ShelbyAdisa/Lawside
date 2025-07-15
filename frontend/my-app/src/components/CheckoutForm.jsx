@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { useStripe } from "@stripe/react-stripe-js";
 
+const API_BASE = import.meta.env.VITE_API_BASE;
+
 const CheckoutForm = ({ amount, appointmentId, user }) => {
   const stripe = useStripe();
   const params = useParams();
@@ -28,7 +30,7 @@ const CheckoutForm = ({ amount, appointmentId, user }) => {
     try {
       const token = localStorage.getItem("authToken");
 
-      const response = await fetch("http://localhost:8000/api/payments/create-checkout-session/", {
+      const response = await fetch(`${API_BASE}/api/payments/create-checkout-session/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

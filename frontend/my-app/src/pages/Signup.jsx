@@ -6,6 +6,8 @@ import {
   FileText, MapPin, DollarSign, GraduationCap, Calendar
 } from 'lucide-react';
 
+const API_BASE = import.meta.env.VITE_API_BASE;
+
 const practiceAreas = [
   { id: 1, name: 'Corporate Law' },
   { id: 2, name: 'Criminal Law' },
@@ -163,9 +165,9 @@ export default function Signup() {
         });
       }
 
-      await axios.post("http://localhost:8000/dj-rest-auth/registration/", payload);
+      await axios.post(`${API_BASE}/dj-rest-auth/registration/`, payload);
 
-      const loginRes = await axios.post("http://localhost:8000/dj-rest-auth/login/", {
+      const loginRes = await axios.post(`${API_BASE}/dj-rest-auth/login/`, {
         email: formData.email,
         password: formData.password1,
       });
@@ -173,7 +175,7 @@ export default function Signup() {
       const token = loginRes.data.key;
       localStorage.setItem("authToken", token);
 
-      const userRes = await axios.get("http://localhost:8000/dj-rest-auth/user/", {
+      const userRes = await axios.get(`${API_BASE}/dj-rest-auth/user/`, {
         headers: { Authorization: `Token ${token}` },
       });
 

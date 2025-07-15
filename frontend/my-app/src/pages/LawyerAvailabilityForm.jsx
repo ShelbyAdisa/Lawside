@@ -13,6 +13,8 @@ import {
   DollarSign,
 } from "lucide-react";
 
+const API_BASE = import.meta.env.VITE_API_BASE;
+
 export default function Lawyers() {
   const navigate = useNavigate();
   const [lawyers, setLawyers] = useState([]);
@@ -29,7 +31,7 @@ export default function Lawyers() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/lawyers/")
+      .get(`${API_BASE}/api/lawyers/`)
       .then((res) => {
         setLawyers(res.data);
         setFilteredLawyers(res.data);

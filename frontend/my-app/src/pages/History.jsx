@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { CalendarDays, User, Clock, BadgeDollarSign } from "lucide-react";
-import { UserContext } from "../context/UserContext"; // Optional if filtering by user later
+
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
@@ -10,7 +11,7 @@ export default function AppointmentsPage() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/appointments/public/")
+      .get(`${API_BASE}/api/appointments/public/`)
       .then((res) => {
         setAppointments(res.data.results);
       })

@@ -14,6 +14,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
+const API_BASE = import.meta.env.VITE_API_BASE;
+
 function AnimatedCounter({ value, className }) {
   const [count, setCount] = useState(0);
 
@@ -45,6 +47,8 @@ export default function ClientDashboard() {
   const [isVisible, setIsVisible] = useState({});
   const now = new Date();
 
+  console.log("API_BASE =", API_BASE);
+
 const upcomingAppointments = clientAppointments
   .filter(appt => new Date(appt.date) > now)
   .sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -63,7 +67,7 @@ const formattedNearestDate = nearestAppointment
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/appointments/public/", {
+        const res = await fetch(`${API_BASE}/api/appointments/public/`, {
           headers: {
             Authorization: `Token ${localStorage.getItem("authToken")}`,
           },

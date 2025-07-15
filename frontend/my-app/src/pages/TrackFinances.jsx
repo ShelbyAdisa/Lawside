@@ -17,6 +17,8 @@ import {
 import { Download } from "lucide-react";
 import saveAs from "file-saver";
 
+const API_BASE = import.meta.env.VITE_API_BASE;
+
 const COLORS = ["#a78bfa", "#f87171", "#34d399"];
 
 const previewData = [

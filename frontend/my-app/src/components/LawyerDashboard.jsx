@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { AuthContext } from "../context/AuthContext";
 
+const API_BASE = import.meta.env.VITE_API_BASE;
+
 function AnimatedCounter({ value, className }) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -46,7 +48,7 @@ function LawyerDashboardContent() {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/appointments/public/", {
+        const res = await fetch(`${API_BASE}/api/appointments/public/`, {
           headers: {
             Authorization: `Token ${token || localStorage.getItem("authToken")}`,
           },
