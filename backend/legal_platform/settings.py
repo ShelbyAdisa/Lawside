@@ -118,7 +118,7 @@ WSGI_APPLICATION = 'legal_platform.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 DATABASES = {
- 'default': dj_database_url.config(default='postgres://legal_user:legal_password@localhost/lawside')
+ 'default': dj_database_url.config(default='postgresql://legaluser:D9QVVMfEPl40ZoJOXfq51aFTeuw5XkEP@dpg-d1rrcu7fte5s73bvd6d0-a/lawside')
 }
 
 # Password validation
